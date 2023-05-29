@@ -1,0 +1,12 @@
+@import "../App.scss";
+
+.table-header {
+  thead {
+    background-color: $primary-color;
+    color: white;
+  }
+}
+
+.table-data {
+  background-color: red;
+}
