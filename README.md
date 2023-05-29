@@ -8,3 +8,10 @@ Cara Jalanin auth-service
 5. buka directory \auth-service
 6. install composer dengan command "composer install --ignore-platform-reqs"
 7. setelah selesai jalankan "php artisan serve"
+
+Cara jalanin ui-react
+1. Install Node 16
+2. Install yarn dengan command "npm install --global yarn"
+3. Masuk ke dir \ui-react
+4. Install node_modules dengan command "yarn install"
+5. Jalankan app "yarn start"
