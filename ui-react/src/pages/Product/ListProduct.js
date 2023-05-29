@@ -85,6 +85,76 @@ function ListProduct() {
       unit_code: "LL03",
       price: 10000000,
     },
+    {
+      id: 12,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 13,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 14,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 15,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 16,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 17,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 18,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 19,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 20,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 21,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
   ];
 
   const handleAddProduct = () => {
@@ -106,7 +176,7 @@ function ListProduct() {
                 />
               </div>
 
-              <AppTable title={ListProductTitle} data={data} />
+              <AppTable title={ListProductTitle} data={data} dataPerPage={3} />
             </div>
           </div>
         </div>
