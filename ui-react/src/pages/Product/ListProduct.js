@@ -29,6 +29,62 @@ function ListProduct() {
       unit_code: "LL03",
       price: 10000000,
     },
+    {
+      id: 4,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 5,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 6,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 7,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 8,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 9,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 10,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
+    {
+      id: 11,
+      product_code: "L001",
+      name: "Laptop Lenovo G01",
+      unit_code: "LL03",
+      price: 10000000,
+    },
   ];
 
   const handleAddProduct = () => {
