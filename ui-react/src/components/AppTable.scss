@@ -1,4 +1,4 @@
-@import "../App.scss";
+@import '../App.scss';
 
 .table-header {
   thead {
@@ -9,4 +9,9 @@
 
 .table-data {
   background-color: red;
+}
+
+.page-button {
+  background-color: $primary-color !important;
+  color: white !important;
 }

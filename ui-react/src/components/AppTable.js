@@ -87,11 +87,11 @@ function AppTable({ title, data }) {
 
     return pages.map((el, i) => {
       return (
-        <li key={i} class='page-item'>
+        <li key={i} class='mx-1 page-item'>
           <button
             value={el}
             onClick={() => handleButtonSelectPage(el)}
-            class='page-link'
+            class={'page-link ' + (currentPage === el ? 'page-button' : '')}
             href='#'
           >
             {el + 1}
