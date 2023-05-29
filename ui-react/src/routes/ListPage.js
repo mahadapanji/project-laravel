@@ -1,6 +1,7 @@
 import Dashboard from "../pages/Dashboard";
 import Login from "../pages/Login/Login";
 import ListProduct from "../pages/Product/ListProduct";
+import AddProduct from "../pages/Product/AddProduct";
 
 function ListPage() {
   const listPage = [
@@ -18,6 +19,11 @@ function ListPage() {
     {
       path: "/product",
       component: <ListProduct />,
+      isPrivate: true,
+    },
+    {
+      path: "/product/add",
+      component: <AddProduct />,
       isPrivate: true,
     },
   ];

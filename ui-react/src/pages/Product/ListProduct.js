@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import AppTable from "../../components/AppTable";
+import PrimaryButton from "../../components/Button/PrimaryButton";
 import "./listProduct.scss";
 
 function ListProduct() {
+  const navigate = useNavigate();
   const ListProductTitle = ["ID", "Product Code", "Name", "Unit Code", "Price"];
   const data = [
     {
@@ -28,6 +31,10 @@ function ListProduct() {
     },
   ];
 
+  const handleAddProduct = () => {
+    navigate("/product/add");
+  };
+
   return (
     <>
       <Navbar />
@@ -35,6 +42,14 @@ function ListProduct() {
         <div className="row">
           <div className="col">
             <div className="custom-card mt-5">
+                
+              <div className="d-flex flex-row-reverse mb-2">
+                <PrimaryButton
+                  name="Add Product"
+                  handleClick={handleAddProduct}
+                />
+              </div>
+
               <AppTable title={ListProductTitle} data={data} />
             </div>
           </div>

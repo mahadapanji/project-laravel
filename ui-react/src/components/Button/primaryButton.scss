@@ -1,0 +1,15 @@
+@import "../../App.scss";
+
+.button-primary {
+  background-color: $primary-color-btn;
+  color: white;
+  padding: 10px;
+  border-color: $primary-color-btn;
+  border-radius: 10px;
+  transition: 200ms;
+
+  &:hover {
+    background-color: $primary-color-hover-btn;
+    border-color: $primary-color-hover-btn;
+  }
+}
