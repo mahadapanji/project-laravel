@@ -8,7 +8,14 @@ import { useState } from "react";
 function ListProduct() {
   const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
-  const ListProductTitle = ["ID", "Product Code", "Name", "Unit Code", "Price"];
+  const ListProductTitle = [
+    "ID",
+    "Product Code",
+    "Name",
+    "Unit Code",
+    "Price",
+    "Action",
+  ];
   const data = [
     {
       id: 1,
@@ -16,6 +23,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL01",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 2,
@@ -23,6 +31,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL02",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 3,
@@ -30,6 +39,7 @@ function ListProduct() {
       name: "Laptop Lenovo G02",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 4,
@@ -37,6 +47,7 @@ function ListProduct() {
       name: "Laptop Lenovo G02",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 5,
@@ -44,6 +55,7 @@ function ListProduct() {
       name: "Laptop Lenovo G03",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 6,
@@ -51,6 +63,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 7,
@@ -58,6 +71,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 8,
@@ -65,6 +79,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 9,
@@ -72,6 +87,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 10,
@@ -79,6 +95,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 11,
@@ -86,6 +103,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 12,
@@ -93,6 +111,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 13,
@@ -100,6 +119,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 14,
@@ -107,6 +127,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 15,
@@ -114,6 +135,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 16,
@@ -121,6 +143,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 17,
@@ -128,6 +151,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 18,
@@ -135,6 +159,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 19,
@@ -142,6 +167,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 20,
@@ -149,6 +175,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
     {
       id: 21,
@@ -156,6 +183,7 @@ function ListProduct() {
       name: "Laptop Lenovo G01",
       unit_code: "LL03",
       price: 10000000,
+      action: "Action",
     },
   ];
 

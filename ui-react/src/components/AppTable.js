@@ -35,11 +35,39 @@ function AppTable({ title, data, dataPerPage }) {
     return data.slice(indexFirstItem(), indexLastItem());
   };
 
+  const handleEditData = (val) => {
+    console.log(val, "CLICKED");
+  };
+
+  const handleDeleteData = (val) => {
+    console.log(val, "Clicked");
+  };
+
   const RenderData = () => {
     return sliceData().map((el, i) => (
       <tr key={i}>
         {Object.values(el).map((val, index) => {
-          return <td key={index}>{val}</td>;
+          if (index + 1 === Object.values(el).length) {
+            return (
+              <td key={index}>
+                <button
+                  onClick={() => handleEditData(i)}
+                  className="me-2 action-button-edit"
+                >
+                  <i className="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  onClick={() => handleDeleteData(i)}
+                  className="action-button-delete"
+                >
+                  <i className="bi bi-x-lg"></i>
+                </button>
+              </td>
+            );
+          } else {
+            return <td key={index}>{val}</td>;
+          }
+          //   return <td key={index}>{val}</td>;
         })}
       </tr>
     ));
