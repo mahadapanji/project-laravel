@@ -1,55 +1,78 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
+import "./Navbar.scss";
 
 function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
+
+  const currentPath = (val) => {
+    return val === location.pathname;
+  };
 
   const handleButtonSignOut = () => {
-    localStorage.removeItem('user');
-    navigate('/');
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
   return (
     <>
-      <nav className='navbar navbar-expand-lg bg-body-tertiary'>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col d-flex justify-content-center'>
-              <a className='navbar-brand' href='/dashboard'>
-                Home
-              </a>
-              <button
-                className='navbar-toggler'
-                type='button'
-                data-bs-toggle='collapse'
-                data-bs-target='#navbarNavAltMarkup'
-                aria-controls='navbarNavAltMarkup'
-                aria-expanded='false'
-                aria-label='Toggle navigation'
-              >
-                <span className='navbar-toggler-icon'></span>
-              </button>
-              <div className='collapse navbar-collapse' id='navbarNavAltMarkup'>
-                <div className='navbar-nav'>
-                  <a
-                    className='nav-link active'
-                    aria-current='page'
-                    href='/product'
-                  >
-                    Product
-                  </a>
-                  <button
-                    type='button'
-                    className='btn btn-primary'
-                    onClick={handleButtonSignOut}
-                  >
-                    Sign Out
-                  </button>
-                </div>
+      <div className="container-fluid">
+        <div
+          className="row d-flex justify-content-between custom-nav"
+        >
+          <div className="col">
+            <div className="row">
+              <div className="col col-lg-2">
+                <a
+                  className={
+                    "nav-link active text-center " +
+                    (currentPath("/dashboard") ? "nav-active" : "")
+                  }
+                  aria-current="page"
+                  href="/dashboard"
+                >
+                  Dashboard
+                </a>
+              </div>
+              <div className="col-lg-2">
+                <a
+                  className={
+                    "nav-link active text-center " +
+                    (currentPath("/product") ? "nav-active" : "")
+                  }
+                  aria-current="page"
+                  href="/product"
+                >
+                  Product
+                </a>
+              </div>
+              <div className="col-lg-2">
+                <a
+                  className={
+                    "nav-link active text-center " +
+                    (currentPath("/order") ? "nav-active" : "")
+                  }
+                  aria-current="page"
+                  href="/order"
+                >
+                  Order
+                </a>
               </div>
             </div>
           </div>
+          <div className="col d-flex justify-content-end">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleButtonSignOut}
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
-      </nav>
+      </div>
     </>
   );
 }
