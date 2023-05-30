@@ -6,7 +6,7 @@ function PrimaryButton({ name, handleClick, handleDisable }) {
     <>
       <button
         type="button"
-        class="button-primary"
+        className="button-primary"
         onClick={handleClick}
         disabled={handleDisable}
       >

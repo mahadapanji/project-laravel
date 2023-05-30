@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './AppTable.scss';
+import { useState } from "react";
+import "./AppTable.scss";
 
 function AppTable({ title, data, dataPerPage }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -7,7 +7,7 @@ function AppTable({ title, data, dataPerPage }) {
   const RenderTitle = () => {
     return title.map((el, i) => {
       return (
-        <th key={i} scope='col'>
+        <th key={i} scope="col">
           {el}
         </th>
       );
@@ -60,7 +60,7 @@ function AppTable({ title, data, dataPerPage }) {
   const RenderPreviousButton = () => {
     if (currentPage > 0) {
       return (
-        <button class='page-link' onClick={handleButtonPrevious}>
+        <button className="page-link" onClick={handleButtonPrevious}>
           Previous
         </button>
       );
@@ -71,7 +71,7 @@ function AppTable({ title, data, dataPerPage }) {
     const totalPages = Math.ceil(data.length / 5);
     if (currentPage + 1 !== totalPages) {
       return (
-        <button class='page-link' onClick={handleButtonNext}>
+        <button className="page-link" onClick={handleButtonNext}>
           Next
         </button>
       );
@@ -106,12 +106,12 @@ function AppTable({ title, data, dataPerPage }) {
 
     return slicePages().map((el, i) => {
       return (
-        <li key={i} class='mx-1 page-item'>
+        <li key={i} className="mx-1 page-item">
           <button
             value={el}
             onClick={() => handleButtonSelectPage(el)}
-            class={'page-link ' + (currentPage === el ? 'page-button' : '')}
-            href='#'
+            className={"page-link " + (currentPage === el ? "page-button" : "")}
+            href="#"
           >
             {el + 1}
           </button>
@@ -122,7 +122,7 @@ function AppTable({ title, data, dataPerPage }) {
 
   return (
     <>
-      <table className='table table-header'>
+      <table className="table table-header">
         <thead>
           <tr>
             <RenderTitle />
@@ -132,15 +132,15 @@ function AppTable({ title, data, dataPerPage }) {
           <RenderData />
         </tbody>
       </table>
-      <div className='row'>
-        <div className='col d-flex justify-content-center'>
-          <nav aria-label='Page navigation example'>
-            <ul class='pagination'>
-              <li class='page-item'>
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          <nav aria-label="Page navigation example">
+            <ul className="pagination">
+              <li className="page-item">
                 <RenderPreviousButton />
               </li>
               <RenderPagination />
-              <li class='page-item'>
+              <li className="page-item">
                 <RenderNextButton />
               </li>
             </ul>
