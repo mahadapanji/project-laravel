@@ -11,7 +11,7 @@
  Target Server Version : 100420 (10.4.20-MariaDB)
  File Encoding         : 65001
 
- Date: 28/05/2023 14:40:41
+ Date: 30/05/2023 15:24:14
 */
 
 SET NAMES utf8mb4;
@@ -46,7 +46,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
@@ -56,6 +56,7 @@ INSERT INTO `migrations` VALUES (6, '2014_10_12_100000_create_password_reset_tok
 INSERT INTO `migrations` VALUES (7, '2019_08_19_000000_create_failed_jobs_table', 1);
 INSERT INTO `migrations` VALUES (8, '2019_12_14_000001_create_personal_access_tokens_table', 1);
 INSERT INTO `migrations` VALUES (9, '2023_05_28_072141_add_column_users', 2);
+INSERT INTO `migrations` VALUES (10, '2023_05_28_101857_create_products_table', 3);
 
 -- ----------------------------
 -- Table structure for password_reset_tokens
@@ -95,6 +96,27 @@ CREATE TABLE `personal_access_tokens`  (
 -- ----------------------------
 -- Records of personal_access_tokens
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for products
+-- ----------------------------
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` decimal(8, 2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of products
+-- ----------------------------
+INSERT INTO `products` VALUES (1, 'test', 'test', 'test', 9000.00, '2023-05-30 07:21:41', '2023-05-30 07:21:41');
+INSERT INTO `products` VALUES (2, 'test42', 'testaa123', 'test', 9000.00, '2023-05-30 07:21:41', '2023-05-30 08:16:27');
 
 -- ----------------------------
 -- Table structure for users
