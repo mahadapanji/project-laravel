@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import AppTable from "../../components/AppTable";
 import PrimaryButton from "../../components/Button/PrimaryButton";
-import "./listProduct.scss";
 import { useState } from "react";
 
 function ListProduct() {
