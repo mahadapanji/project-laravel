@@ -46,7 +46,9 @@ function AppTable({ title, data, dataPerPage }) {
   };
 
   const handleButtonPrevious = () => {
-    setCurrentPage(currentPage - 1);
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   const handleButtonNext = () => {
@@ -58,7 +60,7 @@ function AppTable({ title, data, dataPerPage }) {
   };
 
   const RenderPreviousButton = () => {
-    if (currentPage > 0) {
+    if (currentPage > 0 && data.length !== 0) {
       return (
         <button className="page-link" onClick={handleButtonPrevious}>
           Previous
@@ -69,7 +71,8 @@ function AppTable({ title, data, dataPerPage }) {
 
   const RenderNextButton = () => {
     const totalPages = Math.ceil(data.length / 5);
-    if (currentPage + 1 !== totalPages) {
+    console.log(data.length);
+    if (currentPage + 1 !== totalPages && data.length !== 0) {
       return (
         <button className="page-link" onClick={handleButtonNext}>
           Next
