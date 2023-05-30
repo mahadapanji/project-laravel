@@ -1,5 +1,13 @@
 # project-laravel
 
+Cara jalanin ui-react
+
+1. Install Node 16
+2. Install yarn dengan command "npm install --global yarn"
+3. Masuk ke dir \ui-react
+4. Install node_modules dengan command "yarn install"
+5. Jalankan app "yarn start"
+
 Cara Jalanin auth-service
 1. install XAMPP
 2. bikin db dengan nama db_sistem
