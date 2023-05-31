@@ -73,6 +73,10 @@ function ListProduct() {
       .catch((err) => console.log(err));
   };
 
+  const handleEditProduct = (id) => {
+    navigate(`/product/update?id=${id}`);
+  };
+
   const handleInputSearch = (e) => {
     setKeyword(e.target.value.toLowerCase());
   };
@@ -119,6 +123,7 @@ function ListProduct() {
                 data={filteredData()}
                 dataPerPage={3}
                 deleteButton={handleDeleteProduct}
+                editButton={handleEditProduct}
               />
             </div>
           </div>
