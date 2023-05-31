@@ -1,11 +1,11 @@
-import appAxios from "./baseApi";
+import appAxios from './baseApi';
 
-export default {
+export const interceptorServices = {
   setupInterceptor: () => {
     appAxios.interceptors.request.use(
       (conf) => {
-        if (conf.url.includes("api/product/all")) {
-          console.log("INTERCEPT");
+        if (!conf.url.includes('/login')) {
+          conf.baseURL = 'http://127.0.0.1:8001';
         }
         return conf;
       },
