@@ -59,12 +59,31 @@ function AppTable({ title, data, dataPerPage, deleteButton, editButton }) {
                 </td>
               );
             } else if (item.value === val) {
-              return <td key={index}>{el[val]}</td>;
+              return <td key={index}>{formatData(val, el[val])}</td>;
             }
           });
         })}
       </tr>
     ));
+  };
+
+  const formatData = (prop, value) => {
+    if (prop === 'created_at' || prop === 'updated_at') {
+      return dateAndTimeFormatter(value);
+    }
+    if (prop === 'price') {
+      return priceFormatter(value);
+    }
+    return value;
+  };
+
+  const dateAndTimeFormatter = (val) => {
+    return ` ${val.slice(11, 19)} | ${val.slice(0, 10)} `;
+  };
+
+  const priceFormatter = (val) => {
+    const slicePrice = val.slice(0, val.indexOf('.'));
+    return `Rp ${slicePrice}`;
   };
 
   const handleButtonPrevious = () => {
