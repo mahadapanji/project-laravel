@@ -1,5 +1,5 @@
-import { useState } from "react";
-import "./AppTable.scss";
+import { useState } from 'react';
+import './AppTable.scss';
 
 function AppTable({ title, data, dataPerPage }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -7,8 +7,8 @@ function AppTable({ title, data, dataPerPage }) {
   const RenderTitle = () => {
     return title.map((el, i) => {
       return (
-        <th key={i} scope="col">
-          {el}
+        <th key={i} scope='col'>
+          {el.title}
         </th>
       );
     });
@@ -36,38 +36,40 @@ function AppTable({ title, data, dataPerPage }) {
   };
 
   const handleEditData = (val) => {
-    console.log(val, "CLICKED");
+    console.log(val, 'CLICKED');
   };
 
   const handleDeleteData = (val) => {
-    console.log(val, "Clicked");
+    console.log(val, 'Clicked');
   };
 
   const RenderData = () => {
     return sliceData().map((el, i) => (
       <tr key={i}>
-        {Object.values(el).map((val, index) => {
-          if (index + 1 === Object.values(el).length) {
-            return (
-              <td key={index}>
-                <button
-                  onClick={() => handleEditData(i)}
-                  className="me-2 action-button-edit"
-                >
-                  <i className="bi bi-pencil-square"></i>
-                </button>
-                <button
-                  onClick={() => handleDeleteData(i)}
-                  className="action-button-delete"
-                >
-                  <i className="bi bi-x-lg"></i>
-                </button>
-              </td>
-            );
-          } else {
-            return <td key={index}>{val}</td>;
-          }
-          //   return <td key={index}>{val}</td>;
+        {title.map((item, index) => {
+          // eslint-disable-next-line array-callback-return
+          return Object.keys(el).map((val) => {
+            if (item.value === val && item.value === 'action') {
+              return (
+                <td key={index}>
+                  <button
+                    onClick={() => handleEditData(i)}
+                    className='me-2 action-button-edit'
+                  >
+                    <i className='bi bi-pencil-square'></i>
+                  </button>
+                  <button
+                    onClick={() => handleDeleteData(i)}
+                    className='action-button-delete'
+                  >
+                    <i className='bi bi-x-lg'></i>
+                  </button>
+                </td>
+              );
+            } else if (item.value === val) {
+              return <td key={index}>{el[val]}</td>;
+            }
+          });
         })}
       </tr>
     ));
@@ -90,7 +92,7 @@ function AppTable({ title, data, dataPerPage }) {
   const RenderPreviousButton = () => {
     if (currentPage > 0 && data.length !== 0) {
       return (
-        <button className="page-link" onClick={handleButtonPrevious}>
+        <button className='page-link' onClick={handleButtonPrevious}>
           Previous
         </button>
       );
@@ -102,7 +104,7 @@ function AppTable({ title, data, dataPerPage }) {
     console.log(data.length);
     if (currentPage + 1 !== totalPages && data.length !== 0) {
       return (
-        <button className="page-link" onClick={handleButtonNext}>
+        <button className='page-link' onClick={handleButtonNext}>
           Next
         </button>
       );
@@ -130,19 +132,18 @@ function AppTable({ title, data, dataPerPage }) {
       const indexLastPages = () => {
         return indexFirstPage() + dataPerPage;
       };
-      console.log(currentPage, indexFirstPage(), indexLastPages(), pages);
-
+      
       return pages.slice(indexFirstPage(), indexLastPages());
     };
 
     return slicePages().map((el, i) => {
       return (
-        <li key={i} className="mx-1 page-item">
+        <li key={i} className='mx-1 page-item'>
           <button
             value={el}
             onClick={() => handleButtonSelectPage(el)}
-            className={"page-link " + (currentPage === el ? "page-button" : "")}
-            href="#"
+            className={'page-link ' + (currentPage === el ? 'page-button' : '')}
+            href='#'
           >
             {el + 1}
           </button>
@@ -153,7 +154,7 @@ function AppTable({ title, data, dataPerPage }) {
 
   return (
     <>
-      <table className="table table-header">
+      <table className='table table-header'>
         <thead>
           <tr>
             <RenderTitle />
@@ -163,15 +164,15 @@ function AppTable({ title, data, dataPerPage }) {
           <RenderData />
         </tbody>
       </table>
-      <div className="row">
-        <div className="col d-flex justify-content-center">
-          <nav aria-label="Page navigation example">
-            <ul className="pagination">
-              <li className="page-item">
+      <div className='row'>
+        <div className='col d-flex justify-content-center'>
+          <nav aria-label='Page navigation example'>
+            <ul className='pagination'>
+              <li className='page-item'>
                 <RenderPreviousButton />
               </li>
               <RenderPagination />
-              <li className="page-item">
+              <li className='page-item'>
                 <RenderNextButton />
               </li>
             </ul>
