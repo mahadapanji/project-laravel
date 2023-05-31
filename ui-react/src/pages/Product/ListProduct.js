@@ -45,18 +45,32 @@ function ListProduct() {
   ];
 
   useEffect(() => {
+    getListProduct();
+  }, []);
+
+  const getListProduct = () => {
     appAxios
       .get('/api/product/all')
       .then((res) => {
         const data = res.data.data;
         data.forEach((el) => (el.action = 'action'));
-        setListProduct((prev) => [...prev, ...data]);
+        setListProduct(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
   const handleAddProduct = () => {
     navigate('/product/add');
+  };
+
+  const handleDeleteProduct = (id) => {
+    appAxios
+      .get(`/api/product/delete/${id}`)
+      .then((res) => {
+        console.log(res);
+        getListProduct();
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleInputSearch = (e) => {
@@ -104,6 +118,7 @@ function ListProduct() {
                 title={ListProductTitle}
                 data={filteredData()}
                 dataPerPage={3}
+                deleteButton={handleDeleteProduct}
               />
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './AppTable.scss';
 
-function AppTable({ title, data, dataPerPage }) {
+function AppTable({ title, data, dataPerPage, deleteButton }) {
   const [currentPage, setCurrentPage] = useState(0);
 
   const RenderTitle = () => {
@@ -39,10 +39,6 @@ function AppTable({ title, data, dataPerPage }) {
     console.log(val, 'CLICKED');
   };
 
-  const handleDeleteData = (val) => {
-    console.log(val, 'Clicked');
-  };
-
   const RenderData = () => {
     return sliceData().map((el, i) => (
       <tr key={i}>
@@ -59,7 +55,7 @@ function AppTable({ title, data, dataPerPage }) {
                     <i className='bi bi-pencil-square'></i>
                   </button>
                   <button
-                    onClick={() => handleDeleteData(i)}
+                    onClick={() => deleteButton(el.id)}
                     className='action-button-delete'
                   >
                     <i className='bi bi-x-lg'></i>
@@ -132,7 +128,7 @@ function AppTable({ title, data, dataPerPage }) {
       const indexLastPages = () => {
         return indexFirstPage() + dataPerPage;
       };
-      
+
       return pages.slice(indexFirstPage(), indexLastPages());
     };
 
