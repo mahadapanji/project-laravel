@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@import '../../App.scss';
 
 .button-primary {
   background-color: $primary-color-btn;
@@ -11,5 +11,18 @@
   &:hover {
     background-color: $primary-color-hover-btn;
     border-color: $primary-color-hover-btn;
+  }
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid $primary-color-btn-disabled;
+  background-color: $primary-color-btn-disabled;
+  color: white;
+
+  &:hover {
+    border: 1px solid $primary-color-btn-disabled;
+    background-color: $primary-color-btn-disabled;
+    color: white;
   }
 }
