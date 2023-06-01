@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
 import Navbar from '../../components/Navbar';
 import AppTable from '../../components/AppTable';
 import PrimaryButton from '../../components/Button/PrimaryButton';
@@ -69,6 +70,7 @@ function ListProduct() {
       .then((res) => {
         console.log(res);
         getListProduct();
+        NotificationManager.success('Success Delete Product');
       })
       .catch((err) => console.log(err));
   };

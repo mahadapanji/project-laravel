@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
 import appAxios from '../../services/baseApi';
 import Navbar from '../../components/Navbar';
 import PrimaryButton from '../../components/Button/PrimaryButton';
@@ -80,6 +81,11 @@ function Product() {
       .then((res) => {
         console.log(res);
         navigate('/product');
+        if (isUpdatePage) {
+          NotificationManager.success('Success Update Product');
+        } else {
+          NotificationManager.success('Success Add Product');
+        }
       })
       .catch((err) => console.log(err));
   };

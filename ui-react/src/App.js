@@ -1,4 +1,5 @@
 import AppRoute from './routes/AppRoute';
+import { NotificationContainer } from 'react-notifications';
 import { interceptorServices } from './services/interceptorServices';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <>
       <div className='app'>
         <AppRoute />
+        <NotificationContainer />
       </div>
     </>
   );

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
 import appAxios from '../../services/baseApi';
 import PrimaryButton from '../../components/Button/PrimaryButton';
 import './login.scss';
@@ -31,6 +32,7 @@ function Login() {
       .then((res) => {
         const user = res.data[0];
         if (user !== undefined) {
+          NotificationManager.success('Success Login');
           localStorage.setItem('user', JSON.stringify(user));
           navigate('/dashboard');
         }
