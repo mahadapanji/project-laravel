@@ -3,6 +3,7 @@ import Login from '../pages/Login/Login';
 import ListProduct from '../pages/Product/ListProduct';
 import Product from '../pages/Product/Product';
 import ListOrder from '../pages/Order/ListOrder';
+import Order from '../pages/Order/Order';
 
 function ListPage() {
   const listPage = [
@@ -37,6 +38,12 @@ function ListPage() {
       component: <ListOrder />,
       isPrivate: true,
     },
+    {
+      path: '/order/add',
+      component: <Order />,
+      isPrivate: true,
+    },
+    
   ];
 
   return listPage;

@@ -6,7 +6,7 @@ function Navbar() {
   const location = useLocation();
 
   const currentPath = (val) => {
-    return val === location.pathname;
+    return location.pathname.includes(val);
   };
 
   const handleButtonSignOut = () => {

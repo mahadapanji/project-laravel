@@ -67,7 +67,7 @@ function ListOrder() {
   console.log(listOrder)
 
   const handleAddOrder = () => {
-    navigate('/product/add');
+    navigate('/order/add');
   };
 
   const handleInputSearch = (e) => {
