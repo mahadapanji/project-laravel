@@ -20,4 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/order/save', [OrderController::class,'save_order']);
+Route::post('/order/update', [OrderController::class,'update_order']);
+Route::get('/order/all', [OrderController::class,'get_order']);
+Route::get('/order/get/{id}', [OrderController::class,'get_order_by_id']);
+Route::get('/order/delete/{order_code}', [OrderController::class,'delete_by_order_code']);
+
+
+Route::get('/order/provinces', [OrderController::class,'get_provinces']);
+Route::get('/order/cities/{prov_id}', [OrderController::class,'get_cities']);
 Route::post('/order/ongkir', [OrderController::class,'get_ongkir']);
