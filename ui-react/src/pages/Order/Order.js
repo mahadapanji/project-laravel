@@ -133,6 +133,11 @@ function Order() {
     }
   };
 
+  const handleDisableSelectCity = (val) => {
+    console.log(val);
+    return payloadOrder[val] === 0;
+  };
+
   console.log(payloadOrder);
 
   return (
@@ -208,6 +213,7 @@ function Order() {
                     placeholder='Regency Origin'
                     onChange={handleInput}
                     value={payloadOrder.regency_origin}
+                    disabled={handleDisableSelectCity('province_origin')}
                   >
                     <RenderOptionCityOrigin />
                   </select>
@@ -250,6 +256,7 @@ function Order() {
                     placeholder='Regency Destination'
                     onChange={handleInput}
                     value={payloadOrder.regency_destination}
+                    disabled={handleDisableSelectCity('province_destination')}
                   >
                     <RenderOptionCityDestination />
                   </select>
