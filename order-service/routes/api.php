@@ -26,6 +26,7 @@ Route::get('/order/get/{id}', [OrderController::class,'get_order_by_id']);
 Route::get('/order/delete/{order_code}', [OrderController::class,'delete_by_order_code']);
 
 
+Route::get('/order/couriers', [OrderController::class,'get_couriers']);
 Route::get('/order/provinces', [OrderController::class,'get_provinces']);
 Route::get('/order/cities/{prov_id}', [OrderController::class,'get_cities']);
 Route::post('/order/ongkir', [OrderController::class,'get_ongkir']);

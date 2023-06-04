@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 04/06/2023 15:25:35
+ Date: 04/06/2023 15:37:37
 */
 
 SET NAMES utf8mb4;
@@ -686,6 +686,23 @@ INSERT INTO `tb_ro_cities` VALUES (498, 10, 'Kabupaten Wonosobo', '56311');
 INSERT INTO `tb_ro_cities` VALUES (499, 24, 'Kabupaten Yahukimo', '99041');
 INSERT INTO `tb_ro_cities` VALUES (500, 24, 'Kabupaten Yalimo', '99481');
 INSERT INTO `tb_ro_cities` VALUES (501, 5, 'Kota Yogyakarta', '55222');
+
+-- ----------------------------
+-- Table structure for tb_ro_couriers
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_ro_couriers`;
+CREATE TABLE `tb_ro_couriers`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code_courier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `name_courier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `id`(`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_ro_couriers
+-- ----------------------------
+INSERT INTO `tb_ro_couriers` VALUES (1, 'jne', 'jne');
 
 -- ----------------------------
 -- Table structure for tb_ro_provinces

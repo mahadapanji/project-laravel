@@ -213,6 +213,26 @@ class OrderController extends Controller
         return response()->json($osi)->setStatusCode($statusCode);
     }
 
+    public function get_couriers(){
+        $osi = array();
+        $statusCode = 200;
+
+        try {
+
+            $provinces = DB::table('tb_ro_couriers')->get();
+            
+            $osi = array('message' => 'success',
+            'data' => $provinces);
+          
+          } catch (\Exception $e) {
+          
+            $osi = array('message' => $e->getMessage());
+            $statusCode = 500;
+          }
+
+        return response()->json($osi)->setStatusCode($statusCode);
+    }
+
     public function get_provinces(){
         $osi = array();
         $statusCode = 200;
@@ -220,7 +240,7 @@ class OrderController extends Controller
         try {
 
             $provinces = DB::table('tb_ro_provinces')->get();
-            
+
             $osi = array('message' => 'success',
             'data' => $provinces);
           
