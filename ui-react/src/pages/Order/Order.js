@@ -197,7 +197,7 @@ function Order() {
                   <h5>Province Origin</h5>
                   <select
                     name='province_origin'
-                    class='form-select'
+                    className='form-select'
                     placeholder='Province Origin'
                     onChange={handleInput}
                     value={payloadOrder.province_origin}
@@ -209,7 +209,7 @@ function Order() {
                   <h5>Regency Origin</h5>
                   <select
                     name='regency_origin'
-                    class='form-select'
+                    className='form-select'
                     placeholder='Regency Origin'
                     onChange={handleInput}
                     value={payloadOrder.regency_origin}
@@ -240,7 +240,7 @@ function Order() {
                   <h5>Province Destination</h5>
                   <select
                     name='province_destination'
-                    class='form-select'
+                    className='form-select'
                     placeholder='Province Destination'
                     onChange={handleInput}
                     value={payloadOrder.province_destination}
@@ -252,7 +252,7 @@ function Order() {
                   <h5>Regency Destination</h5>
                   <select
                     name='regency_destination'
-                    class='form-select'
+                    className='form-select'
                     placeholder='Regency Destination'
                     onChange={handleInput}
                     value={payloadOrder.regency_destination}
@@ -265,7 +265,7 @@ function Order() {
                   <h5>Courier</h5>
                   <select
                     name='courier'
-                    class='form-select'
+                    className='form-select'
                     placeholder='courier'
                     onChange={handleInput}
                     value={payloadOrder.courier}
