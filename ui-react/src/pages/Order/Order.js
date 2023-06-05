@@ -1,36 +1,72 @@
-import { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar';
-import appAxios from '../../services/baseApi';
+import { useEffect, useState } from "react";
+import Navbar from "../../components/Navbar";
+import appAxios from "../../services/baseApi";
+import AppTable from "../../components/AppTable";
+import AppModal from "../../components/AppModal";
+import PrimaryButton from "../../components/Button/PrimaryButton";
 
 function Order() {
   const [payloadOrder, setPayloadOrder] = useState({
-    order_code: '',
-    name: '',
-    address: '',
+    order_code: "",
+    name: "",
+    address: "",
     province_origin: 0,
     regency_origin: 0,
     province_destination: 0,
     regency_destination: 0,
     courier: 0,
+    details: [],
   });
   const [listProvince, setListProvince] = useState([]);
   const [listCityOrigin, setListCityOrigin] = useState([]);
   const [listCityDestination, setListCityDestination] = useState([]);
   const [listCourier, setListCourier] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    getListProvince();
-    getListCourier();
+    // getListProvince();
+    // getListCourier();
   }, []);
+
+  const listOrderHeader = [
+    {
+      title: "Product Code",
+      value: "product_code",
+    },
+    {
+      title: "Product Name",
+      value: "product_name",
+    },
+    {
+      title: "Product Unit Code",
+      value: "product_unit_code",
+    },
+    {
+      title: "Quantity",
+      value: "qty",
+    },
+    {
+      title: "Product Price",
+      value: "product_price",
+    },
+    {
+      title: "Product Total Price",
+      value: "created_at",
+    },
+    {
+      title: "Action",
+      value: "action",
+    },
+  ];
 
   const getListProvince = () => {
     appAxios
-      .get('/api/order/provinces')
+      .get("/api/order/provinces")
       .then((res) => {
         const data = res.data.data;
         data.unshift({
           province_id: 0,
-          province_name: '',
+          province_name: "",
         });
         setListProvince(data);
       })
@@ -45,10 +81,10 @@ function Order() {
         data.unshift({
           city_id: 0,
           province_id: 0,
-          city_name: '',
+          city_name: "",
           postal_code: 0,
         });
-        if (place.includes('origin')) {
+        if (place.includes("origin")) {
           setPayloadOrder((prevState) => ({
             ...prevState,
             regency_origin: 0,
@@ -67,13 +103,13 @@ function Order() {
 
   const getListCourier = () => {
     appAxios
-      .get('/api/order/couriers')
+      .get("/api/order/couriers")
       .then((res) => {
         const data = res.data.data;
         data.unshift({
           id: 0,
-          code_courier: '',
-          name_courier: '',
+          code_courier: "",
+          name_courier: "",
         });
         setListCourier(data);
       })
@@ -128,7 +164,7 @@ function Order() {
         : e.target.value,
     }));
 
-    if (e.target.name.includes('province')) {
+    if (e.target.name.includes("province")) {
       getListCity(e.target.value, e.target.name);
     }
   };
@@ -138,53 +174,66 @@ function Order() {
     return payloadOrder[val] === 0;
   };
 
-  console.log(payloadOrder);
+  const handleAddProduct = () => {
+    return true;
+  };
+
+  const closeModalProduct = () => {
+    window.onclick = function (e) {
+      if (e.target.className === "modal-container") {
+        setShowModal(false);
+      }
+    };
+  };
+
+  closeModalProduct();
 
   return (
     <>
       <Navbar />
-      <div className='container'>
-        <div className='row'>
-          <div className='col'>
-            <div className='custom-card mt-5'>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <div className="custom-card mt-5">
+              <AppModal showModal={showModal} />
               {/* FIRST ROW */}
-              <div className='row'>
-                <div className='col'>
+              <div className="row">
+                <div className="col">
                   <h5>Order Code</h5>
-                  <div className='input-group mb-3'>
+                  <div className="input-group mb-3">
                     <input
-                      name='name'
-                      type='text'
-                      className='form-control'
-                      placeholder='Name'
-                      aria-label='Name'
-                      aria-describedby='basic-addon1'
+                      name="name"
+                      type="text"
+                      className="form-control"
+                      placeholder="Name"
+                      aria-label="Name"
+                      aria-describedby="basic-addon1"
                     />
                   </div>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h5>Name</h5>
-                  <div className='input-group mb-3'>
+                  <div className="input-group mb-3">
                     <input
-                      name='name'
-                      type='text'
-                      className='form-control'
-                      placeholder='Name'
-                      aria-label='Name'
-                      aria-describedby='basic-addon1'
+                      name="name"
+                      type="text"
+                      className="form-control"
+                      placeholder="Name"
+                      aria-label="Name"
+                      aria-describedby="basic-addon1"
                     />
                   </div>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h5>Address</h5>
-                  <div className='input-group mb-3'>
+                  <div className="input-group mb-3">
                     <input
-                      name='name'
-                      type='text'
-                      className='form-control'
-                      placeholder='Name'
-                      aria-label='Name'
-                      aria-describedby='basic-addon1'
+                      name="name"
+                      type="text"
+                      className="form-control"
+                      placeholder="Name"
+                      aria-label="Name"
+                      aria-describedby="basic-addon1"
                     />
                   </div>
                 </div>
@@ -192,42 +241,42 @@ function Order() {
               {/* END FIRST ROW */}
 
               {/* SECOND ROW */}
-              <div className='row'>
-                <div className='col'>
+              <div className="row mt-5">
+                <div className="col">
                   <h5>Province Origin</h5>
                   <select
-                    name='province_origin'
-                    className='form-select'
-                    placeholder='Province Origin'
+                    name="province_origin"
+                    className="form-select"
+                    placeholder="Province Origin"
                     onChange={handleInput}
                     value={payloadOrder.province_origin}
                   >
                     <RenderOptionProvince />
                   </select>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h5>Regency Origin</h5>
                   <select
-                    name='regency_origin'
-                    className='form-select'
-                    placeholder='Regency Origin'
+                    name="regency_origin"
+                    className="form-select"
+                    placeholder="Regency Origin"
                     onChange={handleInput}
                     value={payloadOrder.regency_origin}
-                    disabled={handleDisableSelectCity('province_origin')}
+                    disabled={handleDisableSelectCity("province_origin")}
                   >
                     <RenderOptionCityOrigin />
                   </select>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h5>Weight</h5>
-                  <div className='input-group mb-3'>
+                  <div className="input-group mb-3">
                     <input
-                      name='name'
-                      type='text'
-                      className='form-control'
-                      placeholder='Name'
-                      aria-label='Name'
-                      aria-describedby='basic-addon1'
+                      name="name"
+                      type="text"
+                      className="form-control"
+                      placeholder="Name"
+                      aria-label="Name"
+                      aria-describedby="basic-addon1"
                     />
                   </div>
                 </div>
@@ -235,38 +284,38 @@ function Order() {
               {/* END ROW */}
 
               {/* THIRD ROW */}
-              <div className='row'>
-                <div className='col'>
+              <div className="row">
+                <div className="col">
                   <h5>Province Destination</h5>
                   <select
-                    name='province_destination'
-                    className='form-select'
-                    placeholder='Province Destination'
+                    name="province_destination"
+                    className="form-select"
+                    placeholder="Province Destination"
                     onChange={handleInput}
                     value={payloadOrder.province_destination}
                   >
                     <RenderOptionProvince />
                   </select>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h5>Regency Destination</h5>
                   <select
-                    name='regency_destination'
-                    className='form-select'
-                    placeholder='Regency Destination'
+                    name="regency_destination"
+                    className="form-select"
+                    placeholder="Regency Destination"
                     onChange={handleInput}
                     value={payloadOrder.regency_destination}
-                    disabled={handleDisableSelectCity('province_destination')}
+                    disabled={handleDisableSelectCity("province_destination")}
                   >
                     <RenderOptionCityDestination />
                   </select>
                 </div>
-                <div className='col'>
+                <div className="col">
                   <h5>Courier</h5>
                   <select
-                    name='courier'
-                    className='form-select'
-                    placeholder='courier'
+                    name="courier"
+                    className="form-select"
+                    placeholder="courier"
                     onChange={handleInput}
                     value={payloadOrder.courier}
                   >
@@ -275,6 +324,25 @@ function Order() {
                 </div>
               </div>
               {/* END THIRD ROW */}
+
+              <div className="row mt-5">
+                <div className="col">
+                  <AppTable
+                    title={listOrderHeader}
+                    data={payloadOrder.details}
+                    dataPerPage={3}
+                  />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col">
+                  <PrimaryButton
+                    name="Add Product"
+                    handleClick={setShowModal}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
