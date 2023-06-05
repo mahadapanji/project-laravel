@@ -47,6 +47,12 @@ function AppModal({
     });
   };
 
+  const handleDisableButton = () => {
+    return (
+      detailData.product_name === '' || detailData.product_total_price === 0
+    );
+  };
+
   return (
     <>
       {showModal ? (
@@ -143,6 +149,7 @@ function AppModal({
                         <PrimaryButton
                           name='Submit'
                           handleClick={handleSubmit}
+                          handleDisable={handleDisableButton()}
                         />
                       </div>
                     </div>
