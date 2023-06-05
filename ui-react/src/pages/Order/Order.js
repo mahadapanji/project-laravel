@@ -34,6 +34,8 @@ function Order() {
   const [listCourier, setListCourier] = useState([]);
   const [listProduct, setListProduct] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [indexDetail, setIndexDetail] = useState(0);
 
   useEffect(() => {
     getListProvince();
@@ -197,10 +199,21 @@ function Order() {
   };
 
   const handleAddProduct = () => {
-    setPayloadOrder((prevState) => ({
-      ...prevState,
-      details: [...prevState.details, payloadDetailsProduct],
-    }));
+    if (isEdit) {
+      const copyDetails = [...payloadOrder.details];
+      copyDetails[indexDetail] = payloadDetailsProduct;
+      setPayloadOrder((prevState) => ({
+        ...prevState,
+        details: copyDetails,
+      }));
+    } else {
+      setPayloadOrder((prevState) => ({
+        ...prevState,
+        details: [...prevState.details, payloadDetailsProduct],
+      }));
+    }
+
+    setIsEdit(false);
     setShowModal(false);
     resetInputProduct();
   };
@@ -220,6 +233,7 @@ function Order() {
   const closeModalProduct = () => {
     window.onclick = function (e) {
       if (e.target.className === 'modal-container') {
+        setIsEdit(false);
         setShowModal(false);
         resetInputProduct();
       }
@@ -227,6 +241,22 @@ function Order() {
   };
 
   closeModalProduct();
+
+  const handleEditDetailProduct = (id) => {
+    setIndexDetail(id);
+    setIsEdit(true);
+    setShowModal(true);
+    setPayloadDetailsProduct(payloadOrder.details[id]);
+  };
+
+  const handleDeleteDetailProduct = (id) => {
+    const copyDetails = [...payloadOrder.details];
+    copyDetails.splice(id, 1);
+    setPayloadOrder((prevState) => ({
+      ...prevState,
+      details: copyDetails,
+    }));
+  };
 
   return (
     <>
@@ -241,6 +271,7 @@ function Order() {
                 detailData={payloadDetailsProduct}
                 handleSubmit={handleAddProduct}
                 optionProduct={listProduct}
+                isEdit={isEdit}
               />
               {/* FIRST ROW */}
               <div className='row'>
@@ -378,6 +409,8 @@ function Order() {
                     title={listOrderHeader}
                     data={payloadOrder.details}
                     dataPerPage={3}
+                    editButton={handleEditDetailProduct}
+                    deleteButton={handleDeleteDetailProduct}
                   />
                 </div>
               </div>

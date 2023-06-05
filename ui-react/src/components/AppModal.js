@@ -3,6 +3,7 @@ import PrimaryButton from './Button/PrimaryButton';
 
 function AppModal({
   showModal,
+  isEdit,
   setDetailData,
   handleSubmit,
   detailData,
@@ -28,7 +29,7 @@ function AppModal({
         ...prevState,
         product_total_price:
           checkIsNumber(e.target.value) * prevState.product_price,
-        qty: checkIsNumber(e.target.value),
+        qty: e.target.value,
       }));
     }
   };
@@ -114,6 +115,7 @@ function AppModal({
                           aria-label='Quantity'
                           aria-describedby='basic-addon1'
                           onChange={handleInput}
+                          value={detailData.qty}
                         />
                       </div>
                       <div className='col'>
@@ -147,7 +149,7 @@ function AppModal({
                     <div className='row mt-5 '>
                       <div className='col d-flex justify-content-end'>
                         <PrimaryButton
-                          name='Submit'
+                          name={isEdit ? "Update" : "Submit"}
                           handleClick={handleSubmit}
                           handleDisable={handleDisableButton()}
                         />
