@@ -17,6 +17,17 @@ function Order() {
     courier: 0,
     details: [],
   });
+
+  const [payloadDetailsProduct, setPayloadDetailsProduct] = useState({
+    product_code: "",
+    product_name: "",
+    product_unit_code: "",
+    qty: 0,
+    product_price: 0,
+    product_total_price: 0,
+    action: "action",
+  });
+
   const [listProvince, setListProvince] = useState([]);
   const [listCityOrigin, setListCityOrigin] = useState([]);
   const [listCityDestination, setListCityDestination] = useState([]);
@@ -24,21 +35,21 @@ function Order() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // getListProvince();
-    // getListCourier();
+    getListProvince();
+    getListCourier();
   }, []);
 
   const listOrderHeader = [
     {
-      title: "Product Code",
+      title: "Code",
       value: "product_code",
     },
     {
-      title: "Product Name",
+      title: "Name",
       value: "product_name",
     },
     {
-      title: "Product Unit Code",
+      title: "Unit Code",
       value: "product_unit_code",
     },
     {
@@ -46,12 +57,12 @@ function Order() {
       value: "qty",
     },
     {
-      title: "Product Price",
+      title: "Price",
       value: "product_price",
     },
     {
-      title: "Product Total Price",
-      value: "created_at",
+      title: "Total Price",
+      value: "product_total_price",
     },
     {
       title: "Action",
@@ -175,13 +186,31 @@ function Order() {
   };
 
   const handleAddProduct = () => {
-    return true;
+    setPayloadOrder((prevState) => ({
+      ...prevState,
+      details: [...prevState.details, payloadDetailsProduct],
+    }));
+    setShowModal(false);
+    resetInputProduct();
+  };
+
+  const resetInputProduct = () => {
+    setPayloadDetailsProduct((prevState) => ({
+      ...prevState,
+      product_code: "",
+      product_name: "",
+      product_unit_code: "",
+      qty: 0,
+      product_price: 0,
+      product_total_price: 0,
+    }));
   };
 
   const closeModalProduct = () => {
     window.onclick = function (e) {
       if (e.target.className === "modal-container") {
         setShowModal(false);
+        resetInputProduct();
       }
     };
   };
@@ -195,7 +224,12 @@ function Order() {
         <div className="row">
           <div className="col">
             <div className="custom-card mt-5">
-              <AppModal showModal={showModal} />
+              <AppModal
+                showModal={showModal}
+                setDetailData={setPayloadDetailsProduct}
+                detailData={payloadDetailsProduct}
+                handleSubmit={handleAddProduct}
+              />
               {/* FIRST ROW */}
               <div className="row">
                 <div className="col">
@@ -327,6 +361,7 @@ function Order() {
 
               <div className="row mt-5">
                 <div className="col">
+                  <h5>List Product</h5>
                   <AppTable
                     title={listOrderHeader}
                     data={payloadOrder.details}

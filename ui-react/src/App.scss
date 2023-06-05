@@ -13,3 +13,9 @@ $primary-color-btn-disabled: #9ca5f7;
   padding: 50px;
   border-radius: 10px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
