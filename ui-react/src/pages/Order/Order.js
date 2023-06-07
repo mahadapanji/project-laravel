@@ -14,7 +14,9 @@ function Order() {
     regency_origin: 0,
     province_destination: 0,
     regency_destination: 0,
-    courier: 0,
+    weight: 0,
+    shipping_cost: 0,
+    courier: '',
     details: [],
   });
 
@@ -33,6 +35,7 @@ function Order() {
   const [listCityDestination, setListCityDestination] = useState([]);
   const [listCourier, setListCourier] = useState([]);
   const [listProduct, setListProduct] = useState([]);
+  const [listShippingFee, setListShipping] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [indexDetail, setIndexDetail] = useState(0);
@@ -140,6 +143,22 @@ function Order() {
       .catch((err) => console.log(err));
   };
 
+  const getListShippingFee = () => {
+    const payloadShipping = {
+      origin: payloadOrder.regency_origin,
+      destination: payloadOrder.regency_destination,
+      weight: payloadOrder.weight,
+      courier: payloadOrder.courier,
+    };
+    appAxios
+      .post('/api/order/ongkir', payloadShipping)
+      .then((res) => {
+        console.log(res.data.data.results[0].costs);
+        setListShipping(res.data.data.results[0].costs);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const RenderOptionProvince = () => {
     return listProvince.map((el, i) => {
       return (
@@ -173,8 +192,18 @@ function Order() {
   const RenderOptionCourier = () => {
     return listCourier.map((el, i) => {
       return (
-        <option value={el.id} key={i}>
-          {el.name_courier}
+        <option value={el.name_courier} key={i}>
+          {el.name_courier.toUpperCase()}
+        </option>
+      );
+    });
+  };
+
+  const RenderOptionShippingFee = () => {
+    return listShippingFee.map((el, i) => {
+      return (
+        <option value={el.cost[0].value} key={i}>
+          JNE - {el.service} | Rp{el.cost[0].value}
         </option>
       );
     });
@@ -297,6 +326,7 @@ function Order() {
                       placeholder='Name'
                       aria-label='Name'
                       aria-describedby='basic-addon1'
+                      onChange={handleInput}
                     />
                   </div>
                 </div>
@@ -347,12 +377,13 @@ function Order() {
                   <h5>Weight</h5>
                   <div className='input-group mb-3'>
                     <input
-                      name='name'
+                      name='weight'
                       type='text'
                       className='form-control'
-                      placeholder='Name'
-                      aria-label='Name'
+                      placeholder='Weight'
+                      aria-label='Weight'
                       aria-describedby='basic-addon1'
+                      onChange={handleInput}
                     />
                   </div>
                 </div>
@@ -400,6 +431,25 @@ function Order() {
                 </div>
               </div>
               {/* END THIRD ROW */}
+
+              <div className='row mt-3'>
+                <div className='col-6'>
+                  <h5>Shipping Cost</h5>
+                  <select
+                    name='shipping_cost'
+                    className='form-select mb-3'
+                    placeholder='Shipping Cost'
+                    onChange={handleInput}
+                    value={payloadOrder.shipping_cost}
+                  >
+                    <RenderOptionShippingFee />
+                  </select>
+                  <PrimaryButton
+                    name='Check'
+                    handleClick={getListShippingFee}
+                  />
+                </div>
+              </div>
 
               <div className='row mt-5'>
                 <div className='col'>
