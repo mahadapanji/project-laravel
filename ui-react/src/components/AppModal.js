@@ -8,6 +8,7 @@ function AppModal({
   handleSubmit,
   detailData,
   optionProduct,
+  closeModal,
 }) {
   const handleInput = (e) => {
     if (e.target.name === 'product_name') {
@@ -60,7 +61,7 @@ function AppModal({
         <div className='modal-container'>
           <div className='container'>
             <div className='row d-flex justify-content-center'>
-              <div className='col-8'>
+              <div className='col-8 modalAddProduct'>
                 <div className='custom-card mt-5'>
                   <div className='container'>
                     <div className='row'>
@@ -147,9 +148,12 @@ function AppModal({
                     </div>
 
                     <div className='row mt-5 '>
+                      <div className='col d-flex justify-content-start'>
+                        <PrimaryButton name='Cancel' handleClick={closeModal} />
+                      </div>
                       <div className='col d-flex justify-content-end'>
                         <PrimaryButton
-                          name={isEdit ? "Update" : "Submit"}
+                          name={isEdit ? 'Update' : 'Submit'}
                           handleClick={handleSubmit}
                           handleDisable={handleDisableButton()}
                         />

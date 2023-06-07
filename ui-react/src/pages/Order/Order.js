@@ -231,16 +231,14 @@ function Order() {
   };
 
   const closeModalProduct = () => {
-    window.onclick = function (e) {
-      if (e.target.className === 'modal-container') {
-        setIsEdit(false);
-        setShowModal(false);
-        resetInputProduct();
-      }
-    };
+    setIsEdit(false);
+    setShowModal(false);
+    resetInputProduct();
   };
 
-  closeModalProduct();
+  const openModalProduct = () => {
+    setShowModal(true);
+  };
 
   const handleEditDetailProduct = (id) => {
     setIndexDetail(id);
@@ -267,6 +265,7 @@ function Order() {
             <div className='custom-card mt-5'>
               <AppModal
                 showModal={showModal}
+                closeModal={closeModalProduct}
                 setDetailData={setPayloadDetailsProduct}
                 detailData={payloadDetailsProduct}
                 handleSubmit={handleAddProduct}
@@ -419,7 +418,7 @@ function Order() {
                 <div className='col'>
                   <PrimaryButton
                     name='Add Product'
-                    handleClick={setShowModal}
+                    handleClick={openModalProduct}
                   />
                 </div>
               </div>
