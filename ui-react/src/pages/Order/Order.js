@@ -163,8 +163,12 @@ function Order() {
     appAxios
       .post('/api/order/ongkir', payloadShipping)
       .then((res) => {
-        console.log(res.data.data.results[0].costs);
-        setListShipping(res.data.data.results[0].costs);
+        const data = res.data.data.results[0].costs;
+        data.unshift({
+          cost: [{ value: 0 }],
+          service: '',
+        });
+        setListShipping(data);
       })
       .catch((err) => console.log(err));
   };
@@ -212,8 +216,10 @@ function Order() {
   const RenderOptionShippingFee = () => {
     return listShippingFee.map((el, i) => {
       return (
-        <option value={el.cost[0].value} key={i}>
-          JNE - {el.service} | Rp{el.cost[0].value}
+        <option value={el?.cost[0].value} key={i}>
+          {el.service !== ''
+            ? `JNE - ${el.service} | Rp${el?.cost[0].value} `
+            : ''}
         </option>
       );
     });
@@ -256,6 +262,10 @@ function Order() {
       payloadOrder.address === '' ||
       payloadOrder.order_code === ''
     );
+  };
+
+  const handleDisableSelectShippingCost = () => {
+    return listShippingFee.length === 0;
   };
 
   const handleAddProduct = () => {
@@ -500,6 +510,7 @@ function Order() {
                     placeholder='Shipping Cost'
                     onChange={handleInput}
                     value={payloadOrder.shipping_cost}
+                    disabled={handleDisableSelectShippingCost()}
                   >
                     <RenderOptionShippingFee />
                   </select>
