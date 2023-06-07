@@ -223,8 +223,18 @@ function Order() {
   };
 
   const handleDisableSelectCity = (val) => {
-    console.log(val);
     return payloadOrder[val] === 0;
+  };
+
+  const handleDisableCheckShippingFee = () => {
+    return (
+      payloadOrder.province_origin === 0 ||
+      payloadOrder.regency_origin === 0 ||
+      payloadOrder.province_destination === 0 ||
+      payloadOrder.regency_destination === 0 ||
+      payloadOrder.weight === 0 ||
+      payloadOrder.weight === ''
+    );
   };
 
   const handleAddProduct = () => {
@@ -378,7 +388,7 @@ function Order() {
                   <div className='input-group mb-3'>
                     <input
                       name='weight'
-                      type='text'
+                      type='number'
                       className='form-control'
                       placeholder='Weight'
                       aria-label='Weight'
@@ -447,6 +457,7 @@ function Order() {
                   <PrimaryButton
                     name='Check'
                     handleClick={getListShippingFee}
+                    handleDisable={handleDisableCheckShippingFee()}
                   />
                 </div>
               </div>
