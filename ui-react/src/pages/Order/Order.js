@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { NotificationManager } from 'react-notifications';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import appAxios from '../../services/baseApi';
 import AppTable from '../../components/AppTable';
@@ -6,6 +8,8 @@ import AppModal from '../../components/AppModal';
 import PrimaryButton from '../../components/Button/PrimaryButton';
 
 function Order() {
+  const navigate = useNavigate();
+
   const [payloadOrder, setPayloadOrder] = useState({
     order_code: '',
     name: '',
@@ -311,6 +315,21 @@ function Order() {
     }));
   };
 
+  const handleSubmitOrder = () => {
+    const payload = JSON.parse(JSON.stringify(payloadOrder));
+
+    for (let i = 0; i < payload.details.length; i++) {
+      delete payload.details[i]['action'];
+    }
+    appAxios
+      .post('/api/order/save', payload)
+      .then((res) => {
+        NotificationManager.success('Success Create Order');
+        navigate('/order');
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <Navbar />
@@ -333,12 +352,13 @@ function Order() {
                   <h5>Order Code</h5>
                   <div className='input-group mb-3'>
                     <input
-                      name='name'
+                      name='order_code'
                       type='text'
                       className='form-control'
-                      placeholder='Name'
-                      aria-label='Name'
+                      placeholder='Order Code'
+                      aria-label='Order Code'
                       aria-describedby='basic-addon1'
+                      onChange={handleInput}
                     />
                   </div>
                 </div>
@@ -360,12 +380,13 @@ function Order() {
                   <h5>Address</h5>
                   <div className='input-group mb-3'>
                     <input
-                      name='name'
+                      name='address'
                       type='text'
                       className='form-control'
-                      placeholder='Name'
-                      aria-label='Name'
+                      placeholder='Address'
+                      aria-label='Address'
                       aria-describedby='basic-addon1'
+                      onChange={handleInput}
                     />
                   </div>
                 </div>
@@ -517,6 +538,15 @@ function Order() {
                       value={payloadOrder.total_price}
                     />
                   </div>
+                </div>
+              </div>
+
+              <div className='row mt-5'>
+                <div className='col d-flex justify-content-center'>
+                  <PrimaryButton
+                    name='Submit'
+                    handleClick={handleSubmitOrder}
+                  />
                 </div>
               </div>
             </div>

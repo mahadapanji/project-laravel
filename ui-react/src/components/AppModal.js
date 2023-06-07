@@ -30,7 +30,7 @@ function AppModal({
         ...prevState,
         product_total_price:
           checkIsNumber(e.target.value) * prevState.product_price,
-        qty: e.target.value,
+        qty: parseInt(e.target.value),
       }));
     }
   };
