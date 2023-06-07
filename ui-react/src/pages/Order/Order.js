@@ -243,7 +243,18 @@ function Order() {
       payloadOrder.province_destination === 0 ||
       payloadOrder.regency_destination === 0 ||
       payloadOrder.weight === 0 ||
-      payloadOrder.weight === ''
+      payloadOrder.weight === '' ||
+      payloadOrder.courier === ''
+    );
+  };
+
+  const handleDisableSubmitOrder = () => {
+    return (
+      handleDisableCheckShippingFee() ||
+      payloadOrder.details.length === 0 ||
+      payloadOrder.name === '' ||
+      payloadOrder.address === '' ||
+      payloadOrder.order_code === ''
     );
   };
 
@@ -546,6 +557,7 @@ function Order() {
                   <PrimaryButton
                     name='Submit'
                     handleClick={handleSubmitOrder}
+                    handleDisable={handleDisableSubmitOrder()}
                   />
                 </div>
               </div>
