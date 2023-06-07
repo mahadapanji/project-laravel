@@ -10,13 +10,14 @@ function Order() {
     order_code: '',
     name: '',
     address: '',
+    courier: '',
     province_origin: 0,
     regency_origin: 0,
     province_destination: 0,
     regency_destination: 0,
     weight: 0,
     shipping_cost: 0,
-    courier: '',
+    total_price: 0,
     details: [],
   });
 
@@ -45,6 +46,11 @@ function Order() {
     getListCourier();
     getListProduct();
   }, []);
+
+  useEffect(() => {
+    calculateTotalPrice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [payloadOrder.details, payloadOrder.shipping_cost]);
 
   const listOrderHeader = [
     {
@@ -251,10 +257,20 @@ function Order() {
         details: [...prevState.details, payloadDetailsProduct],
       }));
     }
-
     setIsEdit(false);
     setShowModal(false);
     resetInputProduct();
+  };
+
+  const calculateTotalPrice = () => {
+    let result = 0;
+    for (let i = 0; i < payloadOrder.details.length; i++) {
+      result += payloadOrder.details[i].product_total_price;
+    }
+    setPayloadOrder((prevState) => ({
+      ...prevState,
+      total_price: (result += payloadOrder.shipping_cost),
+    }));
   };
 
   const resetInputProduct = () => {
@@ -442,6 +458,7 @@ function Order() {
               </div>
               {/* END THIRD ROW */}
 
+              {/* FOURTH ROW */}
               <div className='row mt-3'>
                 <div className='col-6'>
                   <h5>Shipping Cost</h5>
@@ -461,6 +478,7 @@ function Order() {
                   />
                 </div>
               </div>
+              {/*END FOURTH ROW */}
 
               <div className='row mt-5'>
                 <div className='col'>
@@ -481,6 +499,24 @@ function Order() {
                     name='Add Product'
                     handleClick={openModalProduct}
                   />
+                </div>
+              </div>
+
+              <div className='row mt-5'>
+                <div className='col-6'>
+                  <h5>Total Price</h5>
+                  <div className='input-group mb-3'>
+                    <input
+                      name='total_price'
+                      type='number'
+                      className='form-control'
+                      placeholder='Total Price'
+                      aria-label='Total Price'
+                      aria-describedby='basic-addon1'
+                      disabled={true}
+                      value={payloadOrder.total_price}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
