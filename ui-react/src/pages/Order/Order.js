@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NotificationManager } from 'react-notifications';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import appAxios from '../../services/baseApi';
 import AppTable from '../../components/AppTable';
@@ -9,6 +9,27 @@ import PrimaryButton from '../../components/Button/PrimaryButton';
 
 function Order() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const isUpdatePage = location.search !== '';
+  const id = searchParams.get('id');
+
+  useEffect(() => {
+    if (isUpdatePage) {
+      appAxios
+        .get(`/api/order/get/${id}`)
+        .then((res) => {
+          const detailOrder = res.data.data;
+
+          if (!detailOrder) {
+            navigate('/order');
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [payloadOrder, setPayloadOrder] = useState({
     order_code: '',

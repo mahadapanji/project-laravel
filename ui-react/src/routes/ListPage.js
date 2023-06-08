@@ -43,6 +43,11 @@ function ListPage() {
       component: <Order />,
       isPrivate: true,
     },
+    {
+      path: '/order/update',
+      component: <Order />,
+      isPrivate: true,
+    },
     
   ];
 

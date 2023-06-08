@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { NotificationManager } from 'react-notifications';
 import appAxios from '../../services/baseApi';
 import Navbar from '../../components/Navbar';
 import AppTable from '../../components/AppTable';
@@ -50,10 +51,10 @@ function ListOrder() {
   ];
 
   useEffect(() => {
-    getListProduct();
+    getListOrder();
   }, []);
 
-  const getListProduct = () => {
+  const getListOrder = () => {
     appAxios
       .get('/api/order/all')
       .then((res) => {
@@ -64,7 +65,7 @@ function ListOrder() {
       .catch((err) => console.log(err));
   };
 
-  console.log(listOrder)
+  console.log(listOrder);
 
   const handleAddOrder = () => {
     navigate('/order/add');
@@ -78,6 +79,22 @@ function ListOrder() {
   const filteredData = () => {
     return listOrder.filter((el) => el.name.toLowerCase().includes(keyword));
   };
+
+  const handleEditOrder = (id) => {
+    navigate(`/order/update?id=${id}`);
+  };
+
+  const handleDeleteOrder = (id) => {
+    appAxios
+      .get(`/api/order/delete/${id}`)
+      .then((res) => {
+        console.log(res);
+        getListOrder();
+        NotificationManager.success('Success Delete Order');
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <Navbar />
@@ -114,6 +131,8 @@ function ListOrder() {
               <AppTable
                 title={ListProductTitle}
                 data={filteredData()}
+                editButton={handleEditOrder}
+                deleteButton={handleDeleteOrder}
                 dataPerPage={3}
               />
             </div>
