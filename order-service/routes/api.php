@@ -23,7 +23,7 @@ Route::post('/order/save', [OrderController::class,'save_order']);
 Route::post('/order/update', [OrderController::class,'update_order']);
 Route::get('/order/all', [OrderController::class,'get_order']);
 Route::get('/order/get/{id}', [OrderController::class,'get_order_by_id']);
-Route::get('/order/delete/{order_code}', [OrderController::class,'delete_by_order_code']);
+Route::get('/order/delete/{id}', [OrderController::class,'delete_by_id']);
 
 
 Route::get('/order/couriers', [OrderController::class,'get_couriers']);
