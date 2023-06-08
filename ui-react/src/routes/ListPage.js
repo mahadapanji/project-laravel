@@ -5,6 +5,7 @@ import Product from '../pages/Product/Product';
 import ListOrder from '../pages/Order/ListOrder';
 import Order from '../pages/Order/Order';
 import ListPayment from '../pages/Payment/ListPayment';
+import Payment from '../pages/Payment/Payment';
 
 function ListPage() {
   const listPage = [
@@ -52,6 +53,11 @@ function ListPage() {
     {
       path: '/payment',
       component: <ListPayment />,
+      isPrivate: true,
+    },
+    {
+      path: '/payment/add',
+      component: <Payment />,
       isPrivate: true,
     },
   ];

@@ -61,16 +61,15 @@ function ListPayment() {
   };
 
   const handleAddProduct = () => {
-    navigate('/product/add');
+    navigate('/payment/add');
   };
 
-  const handleDeleteProduct = (id) => {
+  const handleDeletePayment = (id) => {
     appAxios
-      .get(`/api/product/delete/${id}`)
+      .get(`/api/payment/delete/${id}`)
       .then((res) => {
-        console.log(res);
         getListPayment();
-        NotificationManager.success('Success Delete Product');
+        NotificationManager.success('Success Delete Payment');
       })
       .catch((err) => console.log(err));
   };
@@ -84,7 +83,9 @@ function ListPayment() {
   };
 
   const filteredData = () => {
-    return listPayment.filter((el) => el.payment_code.toLowerCase().includes(keyword));
+    return listPayment.filter((el) =>
+      el.payment_code.toLowerCase().includes(keyword)
+    );
   };
 
   return (
@@ -124,7 +125,7 @@ function ListPayment() {
                 title={ListProductTitle}
                 data={filteredData()}
                 dataPerPage={3}
-                deleteButton={handleDeleteProduct}
+                deleteButton={handleDeletePayment}
                 editButton={handleEditProduct}
               />
             </div>
