@@ -20,16 +20,36 @@ function Order() {
       appAxios
         .get(`/api/order/get/${id}`)
         .then((res) => {
-          const detailOrder = res.data.data;
-
-          if (!detailOrder) {
-            navigate('/order');
-          }
+          mappingDetailData(res);
         })
         .catch((err) => console.log(err));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const mappingDetailData = (res) => {
+    const detailOrder = res.data.data;
+    detailOrder.shipping_cost = parseInt(detailOrder.shipping_cost);
+    detailOrder.total_price = parseInt(detailOrder.total_price);
+    detailOrder.details.forEach((el) => {
+      el.action = 'action';
+      el.qty = parseInt(el.qty);
+      el.product_price = parseInt(el.product_price);
+      el.product_total_price = parseInt(el.product_total_price);
+    });
+    getListCity(parseInt(detailOrder.province_origin), 'origin', true);
+    getListCity(
+      parseInt(detailOrder.province_destination),
+      'destination',
+      true
+    );
+    getListShippingFee(detailOrder);
+    setPayloadOrder(detailOrder);
+
+    if (!detailOrder) {
+      navigate('/order');
+    }
+  };
 
   const [payloadOrder, setPayloadOrder] = useState({
     order_code: '',
@@ -122,7 +142,7 @@ function Order() {
       .catch((err) => console.log(err));
   };
 
-  const getListCity = (id, place) => {
+  const getListCity = (id, place, isFirstRender) => {
     appAxios
       .get(`/api/order/cities/${id}`)
       .then((res) => {
@@ -134,16 +154,20 @@ function Order() {
           postal_code: 0,
         });
         if (place.includes('origin')) {
-          setPayloadOrder((prevState) => ({
-            ...prevState,
-            regency_origin: 0,
-          }));
+          if (!isFirstRender) {
+            setPayloadOrder((prevState) => ({
+              ...prevState,
+              regency_origin: 0,
+            }));
+          }
           setListCityOrigin(data);
-        } else {
-          setPayloadOrder((prevState) => ({
-            ...prevState,
-            regency_destination: 0,
-          }));
+        } else if (!place.includes('origin')) {
+          if (!isFirstRender) {
+            setPayloadOrder((prevState) => ({
+              ...prevState,
+              regency_destination: 0,
+            }));
+          }
           setListCityDestination(data);
         }
       })
@@ -174,12 +198,12 @@ function Order() {
       .catch((err) => console.log(err));
   };
 
-  const getListShippingFee = () => {
+  const getListShippingFee = (val) => {
     const payloadShipping = {
-      origin: payloadOrder.regency_origin,
-      destination: payloadOrder.regency_destination,
-      weight: payloadOrder.weight,
-      courier: payloadOrder.courier,
+      origin: val.regency_origin,
+      destination: val.regency_destination,
+      weight: val.weight,
+      courier: val.courier,
     };
     appAxios
       .post('/api/order/ongkir', payloadShipping)
@@ -255,7 +279,7 @@ function Order() {
     }));
 
     if (e.target.name.includes('province')) {
-      getListCity(e.target.value, e.target.name);
+      getListCity(e.target.value, e.target.name, false);
     }
   };
 
@@ -286,6 +310,9 @@ function Order() {
   };
 
   const handleDisableSelectShippingCost = () => {
+    if (isUpdatePage) {
+      return false;
+    }
     return listShippingFee.length === 0;
   };
 
@@ -311,7 +338,7 @@ function Order() {
   const calculateTotalPrice = () => {
     let result = 0;
     for (let i = 0; i < payloadOrder.details.length; i++) {
-      result += payloadOrder.details[i].product_total_price;
+      result += parseInt(payloadOrder.details[i].product_total_price);
     }
     setPayloadOrder((prevState) => ({
       ...prevState,
@@ -342,15 +369,22 @@ function Order() {
   };
 
   const handleEditDetailProduct = (id) => {
-    setIndexDetail(id);
+    const copyDetails = [...payloadOrder.details];
+    const findIndex = copyDetails.findIndex((el) => el?.id === id);
+
+    setIndexDetail(isUpdatePage ? findIndex : id);
+
+    setPayloadDetailsProduct(
+      payloadOrder.details[isUpdatePage ? findIndex : id]
+    );
     setIsEdit(true);
     setShowModal(true);
-    setPayloadDetailsProduct(payloadOrder.details[id]);
   };
 
   const handleDeleteDetailProduct = (id) => {
     const copyDetails = [...payloadOrder.details];
-    copyDetails.splice(id, 1);
+    const findIndex = copyDetails.findIndex((el) => el?.id === id);
+    copyDetails.splice(isUpdatePage ? findIndex : id, 1);
     setPayloadOrder((prevState) => ({
       ...prevState,
       details: copyDetails,
@@ -364,9 +398,11 @@ function Order() {
       delete payload.details[i]['action'];
     }
     appAxios
-      .post('/api/order/save', payload)
+      .post(isUpdatePage ? '/api/order/update' : '/api/order/save', payload)
       .then((res) => {
-        NotificationManager.success('Success Create Order');
+        NotificationManager.success(
+          isUpdatePage ? 'Success Update Order' : 'Success Create Order'
+        );
         navigate('/order');
       })
       .catch((err) => console.log(err));
@@ -401,6 +437,7 @@ function Order() {
                       aria-label='Order Code'
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
+                      value={payloadOrder.order_code}
                     />
                   </div>
                 </div>
@@ -415,6 +452,7 @@ function Order() {
                       aria-label='Name'
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
+                      value={payloadOrder.name}
                     />
                   </div>
                 </div>
@@ -429,6 +467,7 @@ function Order() {
                       aria-label='Address'
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
+                      value={payloadOrder.address}
                     />
                   </div>
                 </div>
@@ -473,6 +512,7 @@ function Order() {
                       aria-label='Weight'
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
+                      value={payloadOrder.weight}
                     />
                   </div>
                 </div>
@@ -537,7 +577,7 @@ function Order() {
                   </select>
                   <PrimaryButton
                     name='Check'
-                    handleClick={getListShippingFee}
+                    handleClick={() => getListShippingFee(payloadOrder)}
                     handleDisable={handleDisableCheckShippingFee()}
                   />
                 </div>
