@@ -4,6 +4,7 @@ import ListProduct from '../pages/Product/ListProduct';
 import Product from '../pages/Product/Product';
 import ListOrder from '../pages/Order/ListOrder';
 import Order from '../pages/Order/Order';
+import ListPayment from '../pages/Payment/ListPayment';
 
 function ListPage() {
   const listPage = [
@@ -48,7 +49,11 @@ function ListPage() {
       component: <Order />,
       isPrivate: true,
     },
-    
+    {
+      path: '/payment',
+      component: <ListPayment />,
+      isPrivate: true,
+    },
   ];
 
   return listPage;

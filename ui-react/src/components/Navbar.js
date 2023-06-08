@@ -56,6 +56,18 @@ function Navbar() {
                   Order
                 </a>
               </div>
+              <div className='col-lg-2'>
+                <a
+                  className={
+                    'nav-link active text-center ' +
+                    (currentPath('/payment') ? 'nav-active' : '')
+                  }
+                  aria-current='page'
+                  href='/payment'
+                >
+                  Payment
+                </a>
+              </div>
             </div>
           </div>
           <div className='col d-flex justify-content-end'>
