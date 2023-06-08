@@ -193,14 +193,14 @@ class OrderController extends Controller
         return response()->json($osi)->setStatusCode($statusCode);
     }
 
-    public function delete_by_order_code($order_code){
+    public function delete_by_id($id){
         $osi = array();
         $statusCode = 200;
 
         try {
-
-            $order_delete = DB::table('orders')->where('order_code', $order_code)->delete();
-            $order_detail_delete = DB::table('order_details')->where('order_code', $order_code)->delete();
+            $order = Order::find($id);
+            $order_delete = DB::table('orders')->where('id', $id)->delete();
+            $order_detail_delete = DB::table('order_details')->where('order_code', $order->order_code)->delete();
             
             $osi = array('message' => 'success');
           
