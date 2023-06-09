@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : LOCAL MYSQL
+ Source Server         : MYSQL LOCALHOST
  Source Server Type    : MySQL
- Source Server Version : 100427
+ Source Server Version : 100420 (10.4.20-MariaDB)
  Source Host           : localhost:3306
  Source Schema         : db_sistem
 
  Target Server Type    : MySQL
- Target Server Version : 100427
+ Target Server Version : 100420 (10.4.20-MariaDB)
  File Encoding         : 65001
 
- Date: 04/06/2023 15:37:37
+ Date: 09/06/2023 19:09:40
 */
 
 SET NAMES utf8mb4;
@@ -30,8 +30,8 @@ CREATE TABLE `failed_jobs`  (
   `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of failed_jobs
@@ -46,7 +46,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
@@ -58,7 +58,10 @@ INSERT INTO `migrations` VALUES (8, '2019_12_14_000001_create_personal_access_to
 INSERT INTO `migrations` VALUES (9, '2023_05_28_072141_add_column_users', 2);
 INSERT INTO `migrations` VALUES (10, '2023_05_28_101857_create_products_table', 3);
 INSERT INTO `migrations` VALUES (11, '2023_06_01_162952_create_orders', 4);
-INSERT INTO `migrations` VALUES (12, '2023_06_01_164403_create_order_details', 4);
+INSERT INTO `migrations` VALUES (12, '2023_06_01_163844_create_order_details', 4);
+INSERT INTO `migrations` VALUES (13, '2023_06_01_164403_create_order_details', 5);
+INSERT INTO `migrations` VALUES (14, '2023_06_08_051228_create_payments_table', 6);
+INSERT INTO `migrations` VALUES (15, '2023_06_08_060320_create_payment_types_table', 7);
 
 -- ----------------------------
 -- Table structure for order_details
@@ -81,7 +84,7 @@ CREATE TABLE `order_details`  (
 -- ----------------------------
 -- Records of order_details
 -- ----------------------------
-INSERT INTO `order_details` VALUES (3, 'A001', 'T001', 'T002', 'T003', 5.00, 100.00, 100.00, '2023-06-04 08:16:07', '2023-06-04 08:16:07');
+INSERT INTO `order_details` VALUES (3, 'A002', 'T001', 'T002', 'T003', 5.00, 100.00, 100.00, '2023-06-01 17:47:36', '2023-06-01 17:47:36');
 
 -- ----------------------------
 -- Table structure for orders
@@ -103,12 +106,12 @@ CREATE TABLE `orders`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (2, 'A001', 'Mahada', 'cibi', 'cibi', 'cibi', 'cibi', 'cibi', 'cibi', 100.00, 9000.00, 9000.00, '2023-06-04 08:16:07', '2023-06-04 08:16:07');
+INSERT INTO `orders` VALUES (7, 'A002', 'Mahada', 'cibi', 'cibi', 'cibi', 'cibi', 'cibi', 'cibi', 100.00, 9000.00, 9000.00, '2023-06-01 17:47:36', '2023-06-01 17:47:36');
 
 -- ----------------------------
 -- Table structure for password_reset_tokens
@@ -119,11 +122,50 @@ CREATE TABLE `password_reset_tokens`  (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of password_reset_tokens
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for payment_types
+-- ----------------------------
+DROP TABLE IF EXISTS `payment_types`;
+CREATE TABLE `payment_types`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `paymenttype_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paymenttype_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of payment_types
+-- ----------------------------
+INSERT INTO `payment_types` VALUES (1, 'csh', 'cash', NULL, NULL);
+INSERT INTO `payment_types` VALUES (2, 'bca1', 'debit - bca', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for payments
+-- ----------------------------
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE `payments`  (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `payment_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of payments
+-- ----------------------------
+INSERT INTO `payments` VALUES (5, 'A0012', 'A001', 'bca1', 'tes', '2023-06-08 05:35:29', '2023-06-08 05:40:36');
 
 -- ----------------------------
 -- Table structure for personal_access_tokens
@@ -141,9 +183,9 @@ CREATE TABLE `personal_access_tokens`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `personal_access_tokens_token_unique`(`token`) USING BTREE,
-  INDEX `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type`, `tokenable_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `personal_access_tokens_token_unique`(`token` ASC) USING BTREE,
+  INDEX `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type` ASC, `tokenable_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of personal_access_tokens
@@ -162,13 +204,12 @@ CREATE TABLE `products`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES (1, 'test', 'test', 'test', 9000.00, '2023-05-30 07:21:41', '2023-05-30 07:21:41');
-INSERT INTO `products` VALUES (2, 'test42', 'testaa123', 'test', 9000.00, '2023-05-30 07:21:41', '2023-05-30 08:16:27');
+INSERT INTO `products` VALUES (5, 'a001', 'aaa', 'pcs2', 2000.00, '2023-06-01 16:20:46', '2023-06-01 16:21:12');
 
 -- ----------------------------
 -- Table structure for tb_ro_cities
@@ -688,31 +729,14 @@ INSERT INTO `tb_ro_cities` VALUES (500, 24, 'Kabupaten Yalimo', '99481');
 INSERT INTO `tb_ro_cities` VALUES (501, 5, 'Kota Yogyakarta', '55222');
 
 -- ----------------------------
--- Table structure for tb_ro_couriers
--- ----------------------------
-DROP TABLE IF EXISTS `tb_ro_couriers`;
-CREATE TABLE `tb_ro_couriers`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `code_courier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `name_courier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `id`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of tb_ro_couriers
--- ----------------------------
-INSERT INTO `tb_ro_couriers` VALUES (1, 'jne', 'jne');
-
--- ----------------------------
 -- Table structure for tb_ro_provinces
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_ro_provinces`;
 CREATE TABLE `tb_ro_provinces`  (
   `province_id` int NOT NULL,
-  `province_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `province_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`province_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_ro_provinces
@@ -766,8 +790,8 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `users_email_unique`(`email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
