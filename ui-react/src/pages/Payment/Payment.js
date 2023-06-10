@@ -108,34 +108,32 @@ function Payment() {
       payloadPayment.id = id;
     }
 
-try {
-  appAxios
-  .post(
-    isUpdatePage ? '/api/payment/update' : '/api/payment/save',
-    payloadPayment, { validateStatus: function (status) {
-      return status < 600; // Reject only if the status code is greater than or equal to 500
-    }}
-  )
-  .then((res) => {
-if (res.status === 200) {
-  
-  console.log(res);
-  navigate('/payment');
-  if (isUpdatePage) {
-    NotificationManager.success('Success Update Payment');
-  } else {
-    NotificationManager.success('Success Add Payment');
-  }
-} else {
-  NotificationManager.error(res.data.message);
-}
 
-  })
-  .catch((err) => console.log(err));
-} catch (error) {
-    console.log(error);
-}
+    appAxios
+      .post(
+        isUpdatePage ? '/api/payment/update' : '/api/payment/save',
+        payloadPayment, {
+        validateStatus: function (status) {
+          return status < 600; // Reject only if the status code is greater than or equal to 500
+        }
+      }
+      )
+      .then((res) => {
+        if (res.status === 200) {
 
+          console.log(res);
+          navigate('/payment');
+          if (isUpdatePage) {
+            NotificationManager.success('Success Update Payment');
+          } else {
+            NotificationManager.success('Success Add Payment');
+          }
+        } else {
+          NotificationManager.error(res.data.message);
+        }
+
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
