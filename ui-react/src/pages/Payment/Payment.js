@@ -29,7 +29,7 @@ function Payment() {
 
   const getListOrder = () => {
     appAxios
-      .get('/api/order/all')
+      .get('/api/payment/invoice/not_pay')
       .then((res) => {
         const data = res.data.data;
         data.unshift({
@@ -66,8 +66,8 @@ function Payment() {
   const RenderOptionListPaymentType = () => {
     return listPaymentType.map((el, i) => {
       return (
-        <option value={el.order_code} key={i}>
-          {el.order_code}
+        <option value={el.paymenttype_code} key={i}>
+          {el.paymenttype_name}
         </option>
       );
     });
@@ -108,21 +108,34 @@ function Payment() {
       payloadPayment.id = id;
     }
 
-    appAxios
-      .post(
-        isUpdatePage ? '/api/product/update' : '/api/product/save',
-        payloadPayment
-      )
-      .then((res) => {
-        console.log(res);
-        navigate('/product');
-        if (isUpdatePage) {
-          NotificationManager.success('Success Update Product');
-        } else {
-          NotificationManager.success('Success Add Product');
-        }
-      })
-      .catch((err) => console.log(err));
+try {
+  appAxios
+  .post(
+    isUpdatePage ? '/api/payment/update' : '/api/payment/save',
+    payloadPayment, { validateStatus: function (status) {
+      return status < 600; // Reject only if the status code is greater than or equal to 500
+    }}
+  )
+  .then((res) => {
+if (res.status === 200) {
+  
+  console.log(res);
+  navigate('/payment');
+  if (isUpdatePage) {
+    NotificationManager.success('Success Update Payment');
+  } else {
+    NotificationManager.success('Success Add Payment');
+  }
+} else {
+  NotificationManager.error(res.data.message);
+}
+
+  })
+  .catch((err) => console.log(err));
+} catch (error) {
+    console.log(error);
+}
+
   };
 
   return (

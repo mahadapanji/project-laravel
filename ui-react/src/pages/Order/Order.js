@@ -87,9 +87,9 @@ function Order() {
   const [indexDetail, setIndexDetail] = useState(0);
 
   useEffect(() => {
-    getListProvince();
-    getListCourier();
-    getListProduct();
+     getListProvince();
+     getListCourier();
+     getListProduct();
   }, []);
 
   useEffect(() => {
