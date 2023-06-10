@@ -23,9 +23,26 @@ function Payment() {
   const [listPaymentType, setListPaymentType] = useState([]);
 
   useEffect(() => {
+    if (isUpdatePage) {
+      appAxios
+        .get(`/api/payment/${id}`)
+        .then((res) => {
+          mappingDetailData(res);
+        })
+        .catch((err) => console.log(err));
+    }
     getListOrder();
     getListPaymentType();
   }, []);
+
+  const mappingDetailData = (res) => {
+    const detailPayment = res.data.data;
+    setPayloadPayment(detailPayment);
+
+    if (!detailPayment) {
+      navigate('/payment');
+    }
+  };
 
   const getListOrder = () => {
     appAxios
@@ -76,19 +93,6 @@ function Payment() {
     });
   };
 
-  const setDetailData = (value) => {
-    Object.keys(payloadPayment).forEach((el) => {
-      Object.keys(value).forEach((val) => {
-        if (el === val) {
-          setPayloadPayment((prevState) => ({
-            ...prevState,
-            [el]: value[val],
-          }));
-        }
-      });
-    });
-  };
-
   const handleInput = (e) => {
     setPayloadPayment((prevState) => ({
       ...prevState,
@@ -107,10 +111,17 @@ function Payment() {
 
   const handleSubmit = () => {
     appAxios
-      .post('/api/payment/save', payloadPayment)
+      .post(
+        isUpdatePage ? '/api/payment/update' : '/api/payment/save',
+        payloadPayment
+      )
       .then((res) => {
         navigate('/payment');
-        NotificationManager.success('Success Add Payment');
+        if (isUpdatePage) {
+          NotificationManager.success('Success Update Payment');
+        } else {
+          NotificationManager.success('Success Add Payment');
+        }
       })
       .catch((err) => console.log(err));
   };

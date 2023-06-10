@@ -60,6 +60,11 @@ function ListPage() {
       component: <Payment />,
       isPrivate: true,
     },
+    {
+      path: '/payment/update',
+      component: <Payment />,
+      isPrivate: true,
+    },
   ];
 
   return listPage;
