@@ -33,6 +33,7 @@ function Payment() {
     }
     getListOrder();
     getListPaymentType();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const mappingDetailData = (res) => {
