@@ -3,6 +3,9 @@ import Login from '../pages/Login/Login';
 import ListProduct from '../pages/Product/ListProduct';
 import Product from '../pages/Product/Product';
 import ListOrder from '../pages/Order/ListOrder';
+import Order from '../pages/Order/Order';
+import ListPayment from '../pages/Payment/ListPayment';
+import Payment from '../pages/Payment/Payment';
 
 function ListPage() {
   const listPage = [
@@ -35,6 +38,26 @@ function ListPage() {
     {
       path: '/order',
       component: <ListOrder />,
+      isPrivate: true,
+    },
+    {
+      path: '/order/add',
+      component: <Order />,
+      isPrivate: true,
+    },
+    {
+      path: '/order/update',
+      component: <Order />,
+      isPrivate: true,
+    },
+    {
+      path: '/payment',
+      component: <ListPayment />,
+      isPrivate: true,
+    },
+    {
+      path: '/payment/add',
+      component: <Payment />,
       isPrivate: true,
     },
   ];

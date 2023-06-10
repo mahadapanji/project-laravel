@@ -6,7 +6,7 @@ function Navbar() {
   const location = useLocation();
 
   const currentPath = (val) => {
-    return val === location.pathname;
+    return location.pathname.includes(val);
   };
 
   const handleButtonSignOut = () => {
@@ -54,6 +54,18 @@ function Navbar() {
                   href='/order'
                 >
                   Order
+                </a>
+              </div>
+              <div className='col-lg-2'>
+                <a
+                  className={
+                    'nav-link active text-center ' +
+                    (currentPath('/payment') ? 'nav-active' : '')
+                  }
+                  aria-current='page'
+                  href='/payment'
+                >
+                  Payment
                 </a>
               </div>
             </div>

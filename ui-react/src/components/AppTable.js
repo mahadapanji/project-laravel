@@ -45,13 +45,13 @@ function AppTable({ title, data, dataPerPage, deleteButton, editButton }) {
               return (
                 <td key={index}>
                   <button
-                    onClick={() => editButton(el.id)}
+                    onClick={() => editButton(el.id ? el.id : i)}
                     className='me-2 action-button-edit'
                   >
                     <i className='bi bi-pencil-square'></i>
                   </button>
                   <button
-                    onClick={() => deleteButton(el.id)}
+                    onClick={() => deleteButton(el.id ? el.id : i)}
                     className='action-button-delete'
                   >
                     <i className='bi bi-x-lg'></i>

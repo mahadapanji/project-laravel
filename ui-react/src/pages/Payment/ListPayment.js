@@ -1,43 +1,38 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NotificationManager } from 'react-notifications';
-import appAxios from '../../services/baseApi';
 import Navbar from '../../components/Navbar';
 import AppTable from '../../components/AppTable';
 import PrimaryButton from '../../components/Button/PrimaryButton';
+import { useState, useEffect } from 'react';
+import appAxios from '../../services/baseApi';
 
-function ListOrder() {
+function ListPayment() {
   const [keyword, setKeyword] = useState('');
-  const [listOrder, setListOrder] = useState([]);
+  const [listPayment, setListPayment] = useState([]);
   const navigate = useNavigate();
-
   const ListProductTitle = [
     {
       title: 'ID',
       value: 'id',
     },
     {
-      title: 'Name',
-      value: 'name',
+      title: 'Payment Code',
+      value: 'payment_code',
     },
     {
       title: 'Order Code',
       value: 'order_code',
     },
     {
-      title: 'Regency Origin',
-      value: 'regency_origin',
+      title: 'Payment Type',
+      value: 'payment_type',
     },
     {
-      title: 'Province Origin',
-      value: 'province_origin',
+      title: 'Payment Note',
+      value: 'payment_note',
     },
     {
-      title: 'Total Price',
-      value: 'total_price',
-    },
-    {
-      title: 'Created At',
+      title: 'Created at',
       value: 'created_at',
     },
     {
@@ -51,48 +46,46 @@ function ListOrder() {
   ];
 
   useEffect(() => {
-    getListOrder();
+    getListPayment();
   }, []);
 
-  const getListOrder = () => {
+  const getListPayment = () => {
     appAxios
-      .get('/api/order/all')
+      .get('/api/payment/all')
       .then((res) => {
         const data = res.data.data;
         data.forEach((el) => (el.action = 'action'));
-        setListOrder(data);
+        setListPayment(data);
       })
       .catch((err) => console.log(err));
   };
 
-  console.log(listOrder);
+  const handleAddProduct = () => {
+    navigate('/payment/add');
+  };
 
-  const handleAddOrder = () => {
-    navigate('/order/add');
+  const handleDeletePayment = (id) => {
+    appAxios
+      .get(`/api/payment/delete/${id}`)
+      .then((res) => {
+        getListPayment();
+        NotificationManager.success('Success Delete Payment');
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleEditProduct = (id) => {
+    navigate(`/product/update?id=${id}`);
   };
 
   const handleInputSearch = (e) => {
-    console.log(e.target.value);
     setKeyword(e.target.value.toLowerCase());
   };
 
   const filteredData = () => {
-    return listOrder.filter((el) => el.name.toLowerCase().includes(keyword));
-  };
-
-  const handleEditOrder = (id) => {
-    navigate(`/order/update?id=${id}`);
-  };
-
-  const handleDeleteOrder = (id) => {
-    appAxios
-      .get(`/api/order/delete/${id}`)
-      .then((res) => {
-        console.log(res);
-        getListOrder();
-        NotificationManager.success('Success Delete Order');
-      })
-      .catch((err) => console.log(err));
+    return listPayment.filter((el) =>
+      el.payment_code.toLowerCase().includes(keyword)
+    );
   };
 
   return (
@@ -121,8 +114,8 @@ function ListOrder() {
                 <div className='col'>
                   <div className='d-flex flex-row-reverse mb-2'>
                     <PrimaryButton
-                      name='Create Order'
-                      handleClick={handleAddOrder}
+                      name='Create Payment'
+                      handleClick={handleAddProduct}
                     />
                   </div>
                 </div>
@@ -131,16 +124,16 @@ function ListOrder() {
               <AppTable
                 title={ListProductTitle}
                 data={filteredData()}
-                editButton={handleEditOrder}
-                deleteButton={handleDeleteOrder}
                 dataPerPage={3}
+                deleteButton={handleDeletePayment}
+                editButton={handleEditProduct}
               />
             </div>
           </div>
         </div>
-      </div>{' '}
+      </div>
     </>
   );
 }
 
-export default ListOrder;
+export default ListPayment;
