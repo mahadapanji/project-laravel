@@ -162,6 +162,7 @@ function Payment() {
                       value={payloadPayment.payment_code}
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
+                      disabled={isUpdatePage}
                     />
                   </div>
                 </div>
