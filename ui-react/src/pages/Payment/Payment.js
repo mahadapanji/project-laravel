@@ -46,8 +46,11 @@ function Payment() {
       .then((res) => {
         const data = res.data.data;
         data.unshift({
-          order_code: '',
+          id: 0,
+          paymenttype_code: '',
+          paymenttype_name: '',
         });
+        console.log(data);
         setListPaymentType(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -66,8 +69,8 @@ function Payment() {
   const RenderOptionListPaymentType = () => {
     return listPaymentType.map((el, i) => {
       return (
-        <option value={el.order_code} key={i}>
-          {el.order_code}
+        <option value={el.paymenttype_name} key={i}>
+          {el.paymenttype_name}
         </option>
       );
     });
@@ -95,32 +98,19 @@ function Payment() {
 
   const isDisabled = () => {
     return (
-      payloadPayment.name === '' ||
-      payloadPayment.product_code === '' ||
-      payloadPayment.unit_code === '' ||
-      payloadPayment.price === 0 ||
-      payloadPayment.price === ''
+      payloadPayment.order_code === '' ||
+      payloadPayment.payment_code === '' ||
+      payloadPayment.payment_type === '' ||
+      payloadPayment.payment_note === ''
     );
   };
 
   const handleSubmit = () => {
-    if (isUpdatePage) {
-      payloadPayment.id = id;
-    }
-
     appAxios
-      .post(
-        isUpdatePage ? '/api/product/update' : '/api/product/save',
-        payloadPayment
-      )
+      .post('/api/payment/save', payloadPayment)
       .then((res) => {
-        console.log(res);
-        navigate('/product');
-        if (isUpdatePage) {
-          NotificationManager.success('Success Update Product');
-        } else {
-          NotificationManager.success('Success Add Product');
-        }
+        navigate('/payment');
+        NotificationManager.success('Success Add Payment');
       })
       .catch((err) => console.log(err));
   };
