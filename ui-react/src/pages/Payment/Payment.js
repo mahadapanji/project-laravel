@@ -47,7 +47,7 @@ function Payment() {
 
   const getListOrder = () => {
     appAxios
-      .get('/api/payment/invoice/not_pay')
+      .get('/api/order/all')
       .then((res) => {
         const data = res.data.data;
         data.unshift({
@@ -115,25 +115,18 @@ function Payment() {
       payloadPayment.id = id;
     }
 
-
     appAxios
       .post(
         isUpdatePage ? '/api/payment/update' : '/api/payment/save',
-        payloadPayment, {
-        validateStatus: function (status) {
-          return status < 600; // Reject only if the status code is greater than or equal to 500
-        }
-      }
+        payloadPayment
       )
       .then((res) => {
-        console.log(res);
-        navigate('/product');
+        navigate('/payment');
         if (isUpdatePage) {
-          NotificationManager.success('Success Update Product');
+          NotificationManager.success('Success Update Payment');
         } else {
-          NotificationManager.success('Success Add Product');
+          NotificationManager.success('Success Add Payment');
         }
-
       })
       .catch((err) => console.log(err));
   };
@@ -164,7 +157,6 @@ function Payment() {
                       value={payloadPayment.payment_code}
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
-                      disabled={isUpdatePage}
                     />
                   </div>
                 </div>
