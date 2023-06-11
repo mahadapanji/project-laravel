@@ -47,7 +47,7 @@ function Payment() {
 
   const getListOrder = () => {
     appAxios
-      .get('/api/order/all')
+      .get('/api/payment/invoice/not_pay')
       .then((res) => {
         const data = res.data.data;
         data.unshift({
@@ -156,6 +156,7 @@ function Payment() {
                       value={payloadPayment.payment_code}
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
+                      disabled={isUpdatePage}
                     />
                   </div>
                 </div>
