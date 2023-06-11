@@ -1,5 +1,5 @@
 import appAxios from './baseApi';
-
+import { NotificationManager } from 'react-notifications';
 export const interceptorServices = {
   setupInterceptor: () => {
     appAxios.interceptors.request.use(
@@ -29,11 +29,11 @@ export const interceptorServices = {
         return new Promise(() => {
           // RESPONSE ERROR
           if (err?.response) {
-            console.log(err);
-            return Promise.reject(err);
+            NotificationManager.error(
+              err.response.data.data.status.description
+            );
           } else {
-            console.log(err);
-            return Promise.reject(err);
+            NotificationManager.error(err.message);
           }
         });
       }

@@ -1,7 +1,6 @@
 import "./primaryButton.scss";
 
 function PrimaryButton({ name, handleClick, handleDisable }) {
-    console.log(handleDisable)
   return (
     <>
       <button

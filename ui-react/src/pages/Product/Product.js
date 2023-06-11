@@ -79,7 +79,6 @@ function Product() {
         payloadProduct
       )
       .then((res) => {
-        console.log(res);
         navigate('/product');
         if (isUpdatePage) {
           NotificationManager.success('Success Update Product');

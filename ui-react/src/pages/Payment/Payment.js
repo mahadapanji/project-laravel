@@ -68,7 +68,6 @@ function Payment() {
           paymenttype_code: '',
           paymenttype_name: '',
         });
-        console.log(data);
         setListPaymentType(res.data.data);
       })
       .catch((err) => console.log(err));

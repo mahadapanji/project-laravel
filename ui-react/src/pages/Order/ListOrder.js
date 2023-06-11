@@ -72,7 +72,6 @@ function ListOrder() {
   };
 
   const handleInputSearch = (e) => {
-    console.log(e.target.value);
     setKeyword(e.target.value.toLowerCase());
   };
 
