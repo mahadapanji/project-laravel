@@ -87,9 +87,9 @@ function Order() {
   const [indexDetail, setIndexDetail] = useState(0);
 
   useEffect(() => {
-    getListProvince();
-    getListCourier();
-    getListProduct();
+     getListProvince();
+     getListCourier();
+     getListProduct();
   }, []);
 
   useEffect(() => {
@@ -398,12 +398,23 @@ function Order() {
       delete payload.details[i]['action'];
     }
     appAxios
-      .post(isUpdatePage ? '/api/order/update' : '/api/order/save', payload)
+      .post(isUpdatePage ? '/api/order/update' : '/api/order/save', payload, {
+        validateStatus: function (status) {
+          return status < 600; // Reject only if the status code is greater than or equal to 500
+        }
+      })
       .then((res) => {
+        
+        if (res.status === 200) {
+
         NotificationManager.success(
           isUpdatePage ? 'Success Update Order' : 'Success Create Order'
         );
         navigate('/order');
+      } else {
+        NotificationManager.error(res.data.message);
+      }
+      
       })
       .catch((err) => console.log(err));
   };
@@ -438,6 +449,7 @@ function Order() {
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
                       value={payloadOrder.order_code}
+                      disabled={isUpdatePage}
                     />
                   </div>
                 </div>
