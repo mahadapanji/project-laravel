@@ -87,9 +87,9 @@ function Order() {
   const [indexDetail, setIndexDetail] = useState(0);
 
   useEffect(() => {
-     getListProvince();
-     getListCourier();
-     getListProduct();
+    getListProvince();
+    getListCourier();
+    getListProduct();
   }, []);
 
   useEffect(() => {
@@ -215,7 +215,7 @@ function Order() {
         });
         setListShipping(data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => NotificationManager.failed('FAILDS'));
   };
 
   const RenderOptionProvince = () => {
@@ -401,20 +401,17 @@ function Order() {
       .post(isUpdatePage ? '/api/order/update' : '/api/order/save', payload, {
         validateStatus: function (status) {
           return status < 600; // Reject only if the status code is greater than or equal to 500
-        }
+        },
       })
       .then((res) => {
-        
         if (res.status === 200) {
-
-        NotificationManager.success(
-          isUpdatePage ? 'Success Update Order' : 'Success Create Order'
-        );
-        navigate('/order');
-      } else {
-        NotificationManager.error(res.data.message);
-      }
-      
+          NotificationManager.success(
+            isUpdatePage ? 'Success Update Order' : 'Success Create Order'
+          );
+          navigate('/order');
+        } else {
+          NotificationManager.error(res.data.message);
+        }
       })
       .catch((err) => console.log(err));
   };

@@ -68,7 +68,6 @@ function ListProduct() {
     appAxios
       .get(`/api/product/delete/${id}`)
       .then((res) => {
-        console.log(res);
         getListProduct();
         NotificationManager.success('Success Delete Product');
       })

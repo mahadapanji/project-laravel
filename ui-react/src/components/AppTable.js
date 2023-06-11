@@ -112,7 +112,6 @@ function AppTable({ title, data, dataPerPage, deleteButton, editButton }) {
 
   const RenderNextButton = () => {
     const totalPages = Math.ceil(data.length / 5);
-    console.log(data.length);
     if (currentPage + 1 !== totalPages && data.length !== 0) {
       return (
         <button className='page-link' onClick={handleButtonNext}>

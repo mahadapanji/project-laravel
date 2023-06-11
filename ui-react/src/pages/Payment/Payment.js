@@ -23,13 +23,31 @@ function Payment() {
   const [listPaymentType, setListPaymentType] = useState([]);
 
   useEffect(() => {
+    if (isUpdatePage) {
+      appAxios
+        .get(`/api/payment/${id}`)
+        .then((res) => {
+          mappingDetailData(res);
+        })
+        .catch((err) => console.log(err));
+    }
     getListOrder();
     getListPaymentType();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const mappingDetailData = (res) => {
+    const detailPayment = res.data.data;
+    setPayloadPayment(detailPayment);
+
+    if (!detailPayment) {
+      navigate('/payment');
+    }
+  };
 
   const getListOrder = () => {
     appAxios
-      .get('/api/payment/invoice/not_pay')
+      .get('/api/order/all')
       .then((res) => {
         const data = res.data.data;
         data.unshift({
@@ -46,7 +64,9 @@ function Payment() {
       .then((res) => {
         const data = res.data.data;
         data.unshift({
-          order_code: '',
+          id: 0,
+          paymenttype_code: '',
+          paymenttype_name: '',
         });
         setListPaymentType(res.data.data);
       })
@@ -66,23 +86,10 @@ function Payment() {
   const RenderOptionListPaymentType = () => {
     return listPaymentType.map((el, i) => {
       return (
-        <option value={el.paymenttype_code} key={i}>
+        <option value={el.paymenttype_name} key={i}>
           {el.paymenttype_name}
         </option>
       );
-    });
-  };
-
-  const setDetailData = (value) => {
-    Object.keys(payloadPayment).forEach((el) => {
-      Object.keys(value).forEach((val) => {
-        if (el === val) {
-          setPayloadPayment((prevState) => ({
-            ...prevState,
-            [el]: value[val],
-          }));
-        }
-      });
     });
   };
 
@@ -95,11 +102,10 @@ function Payment() {
 
   const isDisabled = () => {
     return (
-      payloadPayment.name === '' ||
-      payloadPayment.product_code === '' ||
-      payloadPayment.unit_code === '' ||
-      payloadPayment.price === 0 ||
-      payloadPayment.price === ''
+      payloadPayment.order_code === '' ||
+      payloadPayment.payment_code === '' ||
+      payloadPayment.payment_type === '' ||
+      payloadPayment.payment_note === ''
     );
   };
 
@@ -108,30 +114,18 @@ function Payment() {
       payloadPayment.id = id;
     }
 
-
     appAxios
       .post(
         isUpdatePage ? '/api/payment/update' : '/api/payment/save',
-        payloadPayment, {
-        validateStatus: function (status) {
-          return status < 600; // Reject only if the status code is greater than or equal to 500
-        }
-      }
+        payloadPayment
       )
       .then((res) => {
-        if (res.status === 200) {
-
-          console.log(res);
-          navigate('/payment');
-          if (isUpdatePage) {
-            NotificationManager.success('Success Update Payment');
-          } else {
-            NotificationManager.success('Success Add Payment');
-          }
+        navigate('/payment');
+        if (isUpdatePage) {
+          NotificationManager.success('Success Update Payment');
         } else {
-          NotificationManager.error(res.data.message);
+          NotificationManager.success('Success Add Payment');
         }
-
       })
       .catch((err) => console.log(err));
   };
@@ -162,7 +156,6 @@ function Payment() {
                       value={payloadPayment.payment_code}
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
-                      disabled={isUpdatePage}
                     />
                   </div>
                 </div>

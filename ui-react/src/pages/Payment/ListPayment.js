@@ -75,7 +75,7 @@ function ListPayment() {
   };
 
   const handleEditProduct = (id) => {
-    navigate(`/product/update?id=${id}`);
+    navigate(`/payment/update?id=${id}`);
   };
 
   const handleInputSearch = (e) => {
