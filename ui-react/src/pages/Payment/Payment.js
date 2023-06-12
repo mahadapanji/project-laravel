@@ -39,6 +39,9 @@ function Payment() {
   const mappingDetailData = (res) => {
     const detailPayment = res.data.data;
     setPayloadPayment(detailPayment);
+    const copyListOrderCode = JSON.parse(JSON.stringify(listOrderCode));
+    copyListOrderCode.unshift({ order_code: detailPayment.order_code });
+    setListOrder(copyListOrderCode);
 
     if (!detailPayment) {
       navigate('/payment');
@@ -50,10 +53,12 @@ function Payment() {
       .get('/api/payment/invoice/not_pay')
       .then((res) => {
         const data = res.data.data;
-        data.unshift({
-          order_code: '',
-        });
-        setListOrder(res.data.data);
+        if (!isUpdatePage) {
+          data.unshift({
+            order_code: '',
+          });
+        }
+        setListOrder((prevState) => [...prevState, ...data]);
       })
       .catch((err) => console.log(err));
   };
