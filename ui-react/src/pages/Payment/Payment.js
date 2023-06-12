@@ -199,8 +199,8 @@ function Payment() {
                       name='payment_note'
                       type='text'
                       className='form-control'
-                      placeholder='Product Code'
-                      aria-label='Product Code'
+                      placeholder='Product Note'
+                      aria-label='Product Note'
                       value={payloadPayment.payment_note}
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
