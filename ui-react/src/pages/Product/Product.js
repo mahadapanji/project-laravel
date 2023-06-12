@@ -166,6 +166,7 @@ function Product() {
                       value={payloadProduct.product_code}
                       aria-describedby='basic-addon1'
                       onChange={handleInput}
+                      disabled={isUpdatePage}
                     />
                   </div>
                 </div>
